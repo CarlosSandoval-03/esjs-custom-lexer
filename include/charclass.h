@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ESJS_CUSTOM_LEXER_BUFFER_H
+#define ESJS_CUSTOM_LEXER_BUFFER_H
 
 typedef enum {
     CHAR_LETTER,
@@ -37,3 +38,5 @@ typedef enum {
 } CharClass;
 
 CharClass classify_char(char c);
+
+#endif // ESJS_CUSTOM_LEXER_BUFFER_H

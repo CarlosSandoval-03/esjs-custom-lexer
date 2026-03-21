@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ESJS_CUSTOM_LEXER_TOKEN_H
+#define ESJS_CUSTOM_LEXER_TOKEN_H
 
 #include <stdio.h>
 
@@ -70,3 +71,5 @@ typedef struct {
     int line;
     int column;
 } Token;
+
+#endif // ESJS_CUSTOM_LEXER_TOKEN_H

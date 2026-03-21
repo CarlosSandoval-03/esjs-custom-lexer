@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ESJS_CUSTOM_LEXER_H
+#define ESJS_CUSTOM_LEXER_H
 
 typedef enum {
     STATE_START,
@@ -40,3 +41,5 @@ typedef enum {
     STATE_DONE,
     STATE_ERROR,
 } LexerState;
+
+#endif // ESJS_CUSTOM_LEXER_H
