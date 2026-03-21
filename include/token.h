@@ -6,7 +6,7 @@ typedef enum {
     TOKEN_IDENTIFIER,
     TOKEN_NUMBER,
     TOKEN_EOF,
-    TOKEN_ERROR
+    TOKEN_ERROR,
 
     TOKEN_PLUS,             // +
     TOKEN_MINUS,            // -
@@ -48,7 +48,7 @@ typedef enum {
     TOKEN_SEMICOLON,        // ;
     TOKEN_COLON,            // :
 
-    TOKEN_OPENING_KEY       // {
+    TOKEN_OPENING_KEY,      // {
     TOKEN_CLOSING_KEY,      // }
     TOKEN_OPENING_BRA,      // [
     TOKEN_CLOSING_BRA,      // ]
