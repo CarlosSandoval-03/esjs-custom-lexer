@@ -51,7 +51,7 @@ void buffer_destroy(Buffer *buf) {
     buf->input = NULL;
 }
 
-int buffer_get(Buffer *buf, size_t pos) {
+int buffer_get(Buffer *buf, const size_t pos) {
     buffer_fill_to(buf, pos);
 
     if (pos >= buf->length) {
