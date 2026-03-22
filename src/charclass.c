@@ -13,6 +13,7 @@ CharClass classify_char(const int c) {
 
     switch (c) {
         case '_': return CHAR_UNDERSCORE;
+
         case '+': return CHAR_PLUS;
         case '-': return CHAR_MINUS;
         case '*': return CHAR_STAR;
