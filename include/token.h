@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+// WARNING: Each value requires its own representation in token.c
 typedef enum {
     TOKEN_IDENTIFIER,
     TOKEN_NUMBER,
@@ -62,6 +63,8 @@ typedef enum {
     TOKEN_ARROW,            // =>
     TOKEN_TERNARY,          // ?
     TOKEN_NULISH,           // ??
+
+    _TOKEN_TYPE_COUNT        // This value is used to keep track of the number of elements
 } TokenType;
 
 typedef struct {
@@ -71,5 +74,7 @@ typedef struct {
     int line;
     int column;
 } Token;
+
+const char *token_type_to_string(TokenType type);
 
 #endif // ESJS_CUSTOM_LEXER_TOKEN_H
