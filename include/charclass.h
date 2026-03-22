@@ -1,6 +1,7 @@
 #ifndef ESJS_CUSTOM_LEXER_BUFFER_H
 #define ESJS_CUSTOM_LEXER_BUFFER_H
 
+// WARNING: Each value requires its own representation in charclass.c
 typedef enum {
     CHAR_LETTER,
     CHAR_DIGIT,
