@@ -62,12 +62,11 @@ static const char *TOKEN_TYPE_NAMES[] = {
     [TOKEN_NULISH] = "tkn_nulish",
 
     [TOKEN_EOF] = "",
-    [TOKEN_ERROR] = ""
-};
+    [TOKEN_ERROR] = ""};
 
 const char *token_type_to_string(const TokenType type) {
-    if (type < 0 || type >= _TOKEN_TYPE_ENUM_COUNT) {
-        return "";
-    }
-    return TOKEN_TYPE_NAMES[type] ? TOKEN_TYPE_NAMES[type] : "";
+  if (type < 0 || type >= _TOKEN_TYPE_ENUM_COUNT) {
+    return "";
+  }
+  return TOKEN_TYPE_NAMES[type] ? TOKEN_TYPE_NAMES[type] : "";
 }

@@ -4,15 +4,15 @@
 #include "scanner.h"
 
 typedef struct {
-    Scanner scanner;
-    TokenType previous_type;
-    int has_previous;
+  Scanner scanner;
+  TokenType previous_type;
+  int has_previous;
 } Lexer;
 
 /**
  * @brief Initializes the lexer over an input buffer.
  */
-void lexer_init(Lexer * lexer, Buffer * buffer);
+void lexer_init(Lexer* lexer, Buffer* buffer);
 
 /**
  * @brief Scans the next token using maximal munch.
@@ -21,6 +21,6 @@ void lexer_init(Lexer * lexer, Buffer * buffer);
  * @param token Output token.
  * @return int Non-zero when a token was produced, 0 on EOF.
  */
-int lexer_next_token(Lexer * lexer, Token * token);
+int lexer_next_token(Lexer* lexer, Token* token);
 
-#endif // ESJS_CUSTOM_LEXER_LEXER_H
+#endif  // ESJS_CUSTOM_LEXER_LEXER_H

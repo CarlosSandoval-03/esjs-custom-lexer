@@ -6,18 +6,18 @@
 #include "token.h"
 
 typedef enum {
-    SCANNER_CONTEXT_DEFAULT,
-    SCANNER_CONTEXT_EXPECT_REGEX
+  SCANNER_CONTEXT_DEFAULT,
+  SCANNER_CONTEXT_EXPECT_REGEX
 } ScannerContext;
 
 typedef struct {
-    Buffer *buffer;
-    size_t pos;
-    int line;
-    int column;
+  Buffer *buffer;
+  size_t pos;
+  int line;
+  int column;
 } Scanner;
 
-void scanner_init(Scanner * sc, Buffer * buffer);
+void scanner_init(Scanner *sc, Buffer *buffer);
 
 int scanner_peek(const Scanner *sc, size_t k);
 
@@ -92,4 +92,4 @@ int scanner_line(const Scanner *sc);
 
 int scanner_column(const Scanner *sc);
 
-#endif // ESJS_CUSTOM_LEXER_SCANNER_H
+#endif  // ESJS_CUSTOM_LEXER_SCANNER_H

@@ -4,56 +4,56 @@
 #include "charclass.h"
 
 typedef enum {
-    STATE_START,
+  STATE_START,
 
-    // Basic States
-    STATE_IDENTIFIER,
-    STATE_NUMBER,
-    // This supports float numbers
-    STATE_DOT_NUMBER,
-    STATE_FLOAT_NUMBER,
+  // Basic States
+  STATE_IDENTIFIER,
+  STATE_NUMBER,
+  // This supports float numbers
+  STATE_DOT_NUMBER,
+  STATE_FLOAT_NUMBER,
 
-    // String States
-    STATE_STRING_DOUBLE, // "..."
-    STATE_STRING_DOUBLE_ESCAPE,
-    STATE_STRING_SINGLE, // '...'
-    STATE_STRING_SINGLE_ESCAPE,
-    STATE_STRING_BACKTICK, // `...`
-    STATE_STRING_BACKTICK_ESCAPE,
+  // String States
+  STATE_STRING_DOUBLE,  // "..."
+  STATE_STRING_DOUBLE_ESCAPE,
+  STATE_STRING_SINGLE,  // '...'
+  STATE_STRING_SINGLE_ESCAPE,
+  STATE_STRING_BACKTICK,  // `...`
+  STATE_STRING_BACKTICK_ESCAPE,
 
-    // Regex States
-    STATE_REGEX_BODY, // /.../
-    STATE_REGEX_BODY_ESCAPE,
-    STATE_REGEX_CLASS, // /[...]/
-    STATE_REGEX_CLASS_ESCAPE,
+  // Regex States
+  STATE_REGEX_BODY,  // /.../
+  STATE_REGEX_BODY_ESCAPE,
+  STATE_REGEX_CLASS,  // /[...]/
+  STATE_REGEX_CLASS_ESCAPE,
 
-    // Ambiguous prefix (needs lookahead)
-    STATE_PLUS,
-    STATE_MINUS,
-    STATE_STAR, // *
-    STATE_SLASH,
-    STATE_PERCENT,
-    STATE_EQUAL,
-    STATE_BANG, // !
-    STATE_LESS,
-    STATE_GREATER,
-    STATE_AMPERSAND, // &
-    STATE_PIPE, // |
-    STATE_QUESTION,
-    STATE_DOT,
+  // Ambiguous prefix (needs lookahead)
+  STATE_PLUS,
+  STATE_MINUS,
+  STATE_STAR,  // *
+  STATE_SLASH,
+  STATE_PERCENT,
+  STATE_EQUAL,
+  STATE_BANG,  // !
+  STATE_LESS,
+  STATE_GREATER,
+  STATE_AMPERSAND,  // &
+  STATE_PIPE,       // |
+  STATE_QUESTION,
+  STATE_DOT,
 
-    // Longer ambiguous variants
-    STATE_STAR_STAR, // **
-    STATE_EQUAL_EQUAL, // ==
-    STATE_BANG_EQUAL, // !=
-    STATE_DOT_DOT, // ..
+  // Longer ambiguous variants
+  STATE_STAR_STAR,    // **
+  STATE_EQUAL_EQUAL,  // ==
+  STATE_BANG_EQUAL,   // !=
+  STATE_DOT_DOT,      // ..
 
-    // Aux final states
-    STATE_DONE,
-    STATE_ERROR,
+  // Aux final states
+  STATE_DONE,
+  STATE_ERROR,
 
-    _STATE_ENUM_COUNT // // This value is used to keep track of the number of
-    // elements
+  _STATE_ENUM_COUNT  // // This value is used to keep track of the number of
+                     // elements
 } LexerState;
 
 /**
@@ -88,4 +88,4 @@ LexerState dfa_next_state(LexerState current, CharClass input_class);
  */
 int dfa_is_accepting(LexerState state);
 
-#endif // ESJS_CUSTOM_LEXER_H
+#endif  // ESJS_CUSTOM_LEXER_H
