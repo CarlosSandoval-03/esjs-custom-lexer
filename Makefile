@@ -27,7 +27,7 @@ $(BUILD_DIR):
 
 # Compila y ejecuta
 run: build
-	./$(TARGET)
+	@./$(TARGET)
 
 clean:
 	rm -rf build $(TARGET)
