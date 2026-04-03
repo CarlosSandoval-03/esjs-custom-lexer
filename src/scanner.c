@@ -169,7 +169,9 @@ int scanner_match_longest_after(Scanner *sc, const TokenType previous_type,
                                 size_t *consumed_length) {
   const ScannerContext default_context = SCANNER_CONTEXT_DEFAULT;
 
-  if (!scanner_allows_regex_after(previous_type)) {
+  // When the current character is not '/' there is no ambiguity: use the
+  // default context directly.
+  if (scanner_peek(sc, 0) != '/') {
     if (used_context != NULL) {
       *used_context = default_context;
     }
@@ -177,19 +179,19 @@ int scanner_match_longest_after(Scanner *sc, const TokenType previous_type,
         sc, scanner_entry_state_for_context(default_context), consumed_length);
   }
 
+  // Current character is '/': always probe both the regex and the default
+  // interpretations and apply the longest-match (maximal munch) principle.
   Scanner default_probe = *sc;
   Scanner regex_probe = *sc;
   size_t regex_length = 0;
   size_t default_length = 0;
   int regex_ok = 0;
 
-  if (scanner_peek(&regex_probe, 0) == '/') {
-    scanner_next(&regex_probe);
-    regex_ok = scanner_match_longest(&regex_probe, dfa_regex_entry_state(),
-                                     &regex_length);
-    if (regex_ok) {
-      regex_length += 1;
-    }
+  scanner_next(&regex_probe);
+  regex_ok = scanner_match_longest(&regex_probe, dfa_regex_entry_state(),
+                                   &regex_length);
+  if (regex_ok) {
+    regex_length += 1;  // account for the leading '/'
   }
 
   const int default_ok = scanner_match_longest(
