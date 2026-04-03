@@ -49,26 +49,99 @@ static void dfa_init_accepting_states(void) {
   dfa_accepting_state[STATE_STAR_STAR] = 1;
   dfa_accepting_state[STATE_EQUAL_EQUAL] = 1;
   dfa_accepting_state[STATE_BANG_EQUAL] = 1;
+
+  dfa_accepting_state[STATE_ID_UNICODE_HEX4] = 1;         // \uXXXX complete
+  dfa_accepting_state[STATE_ID_UNICODE_BRACE_CLOSE] = 1;  // \u{X+} complete
 }
 
 /**
- * @brief Configures identifier recognition: [$A-Za-z_][$A-Za-z0-9_]* with UTF-8
- * support.
+ * @brief Configures identifier recognition:
+ *   [$A-Za-z_\uXXXX\u{X+}][$A-Za-z0-9_\uXXXX\u{X+}]*
+ * with UTF-8 and Unicode escape sequence support.
  */
 static void dfa_set_identifier_rules(void) {
-  // ID start
+  // ID start: letter (including 'u'), underscore, $, UTF-8 multi-byte
   dfa_table[STATE_START][CHAR_LETTER] = STATE_IDENTIFIER;
+  dfa_table[STATE_START][CHAR_U_LOWER] = STATE_IDENTIFIER;
   dfa_table[STATE_START][CHAR_UNDERSCORE] = STATE_IDENTIFIER;
   dfa_table[STATE_START][CHAR_DOLLAR_SIGN] = STATE_IDENTIFIER;
-  dfa_table[STATE_START][CHAR_UTF8_CONTINUATION] =
-      STATE_IDENTIFIER;  // Support UTF-8 at start
+  dfa_table[STATE_START][CHAR_UTF8_CONTINUATION] = STATE_IDENTIFIER;
   // ID content
   dfa_table[STATE_IDENTIFIER][CHAR_LETTER] = STATE_IDENTIFIER;
+  dfa_table[STATE_IDENTIFIER][CHAR_U_LOWER] = STATE_IDENTIFIER;
   dfa_table[STATE_IDENTIFIER][CHAR_UNDERSCORE] = STATE_IDENTIFIER;
   dfa_table[STATE_IDENTIFIER][CHAR_DOLLAR_SIGN] = STATE_IDENTIFIER;
   dfa_table[STATE_IDENTIFIER][CHAR_DIGIT] = STATE_IDENTIFIER;
-  dfa_table[STATE_IDENTIFIER][CHAR_UTF8_CONTINUATION] =
-      STATE_IDENTIFIER;  // Support UTF-8 continuation
+  dfa_table[STATE_IDENTIFIER][CHAR_UTF8_CONTINUATION] = STATE_IDENTIFIER;
+}
+
+/**
+ * @brief Configures Unicode escape sequences (\uXXXX and \u{XXXX}) as valid
+ * identifier characters, matching the ECMAScript specification.
+ *
+ * The 4-hex-digit form accepts any letter or digit in each position; strict
+ * hex validation (0-9, a-f, A-F) is left to semantic analysis.
+ */
+static void dfa_set_unicode_escape_rules(void) {
+  // '\' starts a unicode escape from the beginning of an identifier or from
+  // within one (and from the accepting unicode states themselves).
+  dfa_table[STATE_START][CHAR_BACKSLASH] = STATE_ID_BACKSLASH;
+  dfa_table[STATE_IDENTIFIER][CHAR_BACKSLASH] = STATE_ID_BACKSLASH;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_BACKSLASH] = STATE_ID_BACKSLASH;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_BACKSLASH] = STATE_ID_BACKSLASH;
+
+  // After '\': only 'u' is valid (all other chars stay at STATE_ERROR default)
+  dfa_table[STATE_ID_BACKSLASH][CHAR_U_LOWER] = STATE_ID_UNICODE_U;
+
+  // After '\u': '{' for brace form, or first hex digit for fixed form
+  dfa_table[STATE_ID_UNICODE_U][CHAR_LBRACE] = STATE_ID_UNICODE_BRACE;
+  dfa_table[STATE_ID_UNICODE_U][CHAR_DIGIT] = STATE_ID_UNICODE_HEX1;
+  dfa_table[STATE_ID_UNICODE_U][CHAR_LETTER] = STATE_ID_UNICODE_HEX1;
+  dfa_table[STATE_ID_UNICODE_U][CHAR_U_LOWER] = STATE_ID_UNICODE_HEX1;
+
+  // Fixed form \uXXXX: consume exactly 4 (hex) characters
+  dfa_table[STATE_ID_UNICODE_HEX1][CHAR_DIGIT] = STATE_ID_UNICODE_HEX2;
+  dfa_table[STATE_ID_UNICODE_HEX1][CHAR_LETTER] = STATE_ID_UNICODE_HEX2;
+  dfa_table[STATE_ID_UNICODE_HEX1][CHAR_U_LOWER] = STATE_ID_UNICODE_HEX2;
+
+  dfa_table[STATE_ID_UNICODE_HEX2][CHAR_DIGIT] = STATE_ID_UNICODE_HEX3;
+  dfa_table[STATE_ID_UNICODE_HEX2][CHAR_LETTER] = STATE_ID_UNICODE_HEX3;
+  dfa_table[STATE_ID_UNICODE_HEX2][CHAR_U_LOWER] = STATE_ID_UNICODE_HEX3;
+
+  dfa_table[STATE_ID_UNICODE_HEX3][CHAR_DIGIT] = STATE_ID_UNICODE_HEX4;
+  dfa_table[STATE_ID_UNICODE_HEX3][CHAR_LETTER] = STATE_ID_UNICODE_HEX4;
+  dfa_table[STATE_ID_UNICODE_HEX3][CHAR_U_LOWER] = STATE_ID_UNICODE_HEX4;
+
+  // After \uXXXX: continue as identifier or start another escape
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_LETTER] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_U_LOWER] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_UNDERSCORE] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_DOLLAR_SIGN] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_DIGIT] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_HEX4][CHAR_UTF8_CONTINUATION] = STATE_IDENTIFIER;
+
+  // Brace form \u{X+}: one or more hex digits then '}'
+  dfa_table[STATE_ID_UNICODE_BRACE][CHAR_DIGIT] = STATE_ID_UNICODE_BRACE_HEX;
+  dfa_table[STATE_ID_UNICODE_BRACE][CHAR_LETTER] = STATE_ID_UNICODE_BRACE_HEX;
+  dfa_table[STATE_ID_UNICODE_BRACE][CHAR_U_LOWER] = STATE_ID_UNICODE_BRACE_HEX;
+
+  dfa_table[STATE_ID_UNICODE_BRACE_HEX][CHAR_DIGIT] =
+      STATE_ID_UNICODE_BRACE_HEX;
+  dfa_table[STATE_ID_UNICODE_BRACE_HEX][CHAR_LETTER] =
+      STATE_ID_UNICODE_BRACE_HEX;
+  dfa_table[STATE_ID_UNICODE_BRACE_HEX][CHAR_U_LOWER] =
+      STATE_ID_UNICODE_BRACE_HEX;
+  dfa_table[STATE_ID_UNICODE_BRACE_HEX][CHAR_RBRACE] =
+      STATE_ID_UNICODE_BRACE_CLOSE;
+
+  // After \u{X+}: continue as identifier or start another escape
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_LETTER] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_U_LOWER] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_UNDERSCORE] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_DOLLAR_SIGN] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_DIGIT] = STATE_IDENTIFIER;
+  dfa_table[STATE_ID_UNICODE_BRACE_CLOSE][CHAR_UTF8_CONTINUATION] =
+      STATE_IDENTIFIER;
 }
 
 /**
@@ -249,6 +322,7 @@ void dfa_init(void) {
 
   dfa_set_layout_rules();
   dfa_set_identifier_rules();
+  dfa_set_unicode_escape_rules();
   dfa_set_number_rules();
   dfa_set_string_rules();
   dfa_set_regex_rules();

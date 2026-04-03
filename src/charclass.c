@@ -23,6 +23,7 @@ CharClass classify_char(const int c) {
     return CHAR_UTF8_CONTINUATION;
   }
 
+  if (c == 'u') return CHAR_U_LOWER;  // Support unicode sequences
   if (isalpha((unsigned char)c)) return CHAR_LETTER;
   if (isdigit((unsigned char)c)) return CHAR_DIGIT;
 

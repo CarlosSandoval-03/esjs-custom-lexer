@@ -4,6 +4,7 @@
 // WARNING: Each value requires its own representation in charclass.c
 typedef enum {
   CHAR_LETTER,
+  CHAR_U_LOWER,  // 'u' — distinguished for \uXXXX escape recognition
   CHAR_DIGIT,
   CHAR_UNDERSCORE,
   CHAR_WHITESPACE,

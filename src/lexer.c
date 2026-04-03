@@ -57,7 +57,8 @@ static TokenType lexer_token_type_from_lexeme(const char *lexeme, size_t length,
   }
 
   if ((first >= 'a' && first <= 'z') || (first >= 'A' && first <= 'Z') ||
-      first == '_' || first == '$') {
+      first == '_' || first == '$' || first == '\\' ||
+      (unsigned char)first >= 0xC0) {
     return keyword_lookup(lexeme, length);
   }
 

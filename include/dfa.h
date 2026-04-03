@@ -48,6 +48,17 @@ typedef enum {
   STATE_BANG_EQUAL,   // !=
   STATE_DOT_DOT,      // ..
 
+  // Unicode escape sequence in identifiers: \uXXXX or \u{XXXX}
+  STATE_ID_BACKSLASH,            // seen '\'
+  STATE_ID_UNICODE_U,            // seen '\u'
+  STATE_ID_UNICODE_HEX1,         // seen '\uX'
+  STATE_ID_UNICODE_HEX2,         // seen '\uXX'
+  STATE_ID_UNICODE_HEX3,         // seen '\uXXX'
+  STATE_ID_UNICODE_HEX4,         // seen '\uXXXX' — accepting
+  STATE_ID_UNICODE_BRACE,        // seen '\u{'
+  STATE_ID_UNICODE_BRACE_HEX,    // seen '\u{X+'
+  STATE_ID_UNICODE_BRACE_CLOSE,  // seen '\u{X+}' — accepting
+
   // Aux final states
   STATE_DONE,
   STATE_ERROR,
