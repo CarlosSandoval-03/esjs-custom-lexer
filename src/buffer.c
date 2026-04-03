@@ -61,5 +61,3 @@ int buffer_get(Buffer *buf, const size_t pos) {
 
   return (unsigned char)buf->data[pos];
 }
-
-int buffer_is_eof(const Buffer *buf) { return buf->eof; }

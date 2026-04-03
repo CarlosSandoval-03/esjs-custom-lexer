@@ -169,8 +169,6 @@ static void lexer_fill_token(Token *token, TokenType type,
 
 void lexer_init(Lexer *lexer, Buffer *buffer) {
   scanner_init(&lexer->scanner, buffer);
-  lexer->previous_type = TOKEN_EOF;
-  lexer->has_previous = 0;
 }
 
 int lexer_next_token(Lexer *lexer, Token *token) {
@@ -183,8 +181,6 @@ int lexer_next_token(Lexer *lexer, Token *token) {
 
   if (current == EOF) {
     lexer_fill_token(token, TOKEN_EOF, NULL, 0, start_line, start_column);
-    lexer->previous_type = TOKEN_EOF;
-    lexer->has_previous = 1;
     return 1;
   }
 
@@ -193,8 +189,7 @@ int lexer_next_token(Lexer *lexer, Token *token) {
   ScannerContext matched_context = SCANNER_CONTEXT_DEFAULT;
 
   const int matched = scanner_match_longest_after(
-      &lexer->scanner, lexer->has_previous ? lexer->previous_type : TOKEN_EOF,
-      &matched_context, &matched_length);
+      &lexer->scanner, &matched_context, &matched_length);
 
   if (matched) {
     matched_scanner = lexer->scanner;
@@ -205,8 +200,6 @@ int lexer_next_token(Lexer *lexer, Token *token) {
     lexer_fill_token(token, TOKEN_ERROR,
                      lexer->scanner.buffer->data + start_pos, 1, start_line,
                      start_column);
-    lexer->previous_type = TOKEN_ERROR;
-    lexer->has_previous = 1;
     return 1;
   }
 
@@ -222,8 +215,6 @@ int lexer_next_token(Lexer *lexer, Token *token) {
 
   lexer_fill_token(token, type, lexeme_start, lexeme_length, start_line,
                    start_column);
-  lexer->previous_type = type;
-  lexer->has_previous = 1;
   lexer->scanner = matched_scanner;
   return 1;
 }

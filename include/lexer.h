@@ -5,8 +5,6 @@
 
 typedef struct {
   Scanner scanner;
-  TokenType previous_type;
-  int has_previous;
 } Lexer;
 
 /**

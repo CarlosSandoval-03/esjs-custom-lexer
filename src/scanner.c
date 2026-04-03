@@ -1,109 +1,6 @@
 #include "../include/scanner.h"
 
 /**
- * @brief Returns true when the previous token can legally precede a regex
- * literal.
- */
-int scanner_allows_regex_after(const TokenType previous_type) {
-  switch (previous_type) {
-    case TOKEN_EOF:
-    case TOKEN_ERROR:
-    case TOKEN_KEYWORD:
-    case TOKEN_ASSIGN:
-    case TOKEN_CONST:
-    case TOKEN_LET:
-    case TOKEN_VAR:
-    case TOKEN_FUNCTION:
-    case TOKEN_RETURN:
-    case TOKEN_IF:
-    case TOKEN_ELSE:
-    case TOKEN_FOR:
-    case TOKEN_WHILE:
-    case TOKEN_DO:
-    case TOKEN_SWITCH:
-    case TOKEN_CASE:
-    case TOKEN_DEFAULT:
-    case TOKEN_BREAK:
-    case TOKEN_CONTINUE:
-    case TOKEN_TRY:
-    case TOKEN_CATCH:
-    case TOKEN_FINALLY:
-    case TOKEN_THROW:
-    case TOKEN_CLASS:
-    case TOKEN_EXTENDS:
-    case TOKEN_NEW:
-    case TOKEN_THIS:
-    case TOKEN_SUPER:
-    case TOKEN_IMPORT:
-    case TOKEN_EXPORT:
-    case TOKEN_FROM:
-    case TOKEN_AS:
-    case TOKEN_ASYNC:
-    case TOKEN_AWAIT:
-    case TOKEN_YIELD:
-    case TOKEN_IN:
-    case TOKEN_OF:
-    case TOKEN_INSTANCEOF:
-    case TOKEN_TYPEOF:
-    case TOKEN_VOID:
-    case TOKEN_DELETE:
-    case TOKEN_DEBUGGER:
-    case TOKEN_WITH:
-    case TOKEN_STATIC:
-    case TOKEN_GET:
-    case TOKEN_SET:
-    case TOKEN_TRUE:
-    case TOKEN_FALSE:
-    case TOKEN_NULL:
-    case TOKEN_UNDEFINED:
-    case TOKEN_ENUM:
-    case TOKEN_IMPLEMENTS:
-    case TOKEN_INTERFACE:
-    case TOKEN_PACKAGE:
-    case TOKEN_PRIVATE:
-    case TOKEN_PROTECTED:
-    case TOKEN_PUBLIC:
-    case TOKEN_MOD_ASSIGN:
-    case TOKEN_DIV_ASSIGN:
-    case TOKEN_TIMES_ASSIGN:
-    case TOKEN_MINUS_ASSIGN:
-    case TOKEN_PLUS_ASSIGN:
-    case TOKEN_POWER_ASSIGN:
-    case TOKEN_EQUAL:
-    case TOKEN_STRICT_EQUAL:
-    case TOKEN_NOT_EQUAL:
-    case TOKEN_STRICT_NOT_EQUAL:
-    case TOKEN_LESS:
-    case TOKEN_LESS_EQUAL:
-    case TOKEN_GREATER:
-    case TOKEN_GREATER_EQUAL:
-    case TOKEN_LOGICAL_AND:
-    case TOKEN_LOGICAL_OR:
-    case TOKEN_NOT:
-    case TOKEN_TERNARY:
-    case TOKEN_COLON:
-    case TOKEN_COMMA:
-    case TOKEN_SEMICOLON:
-    case TOKEN_OPENING_KEY:
-    case TOKEN_OPENING_BRA:
-    case TOKEN_OPENING_PAR:
-    case TOKEN_ARROW:
-      return 1;
-    default:
-      return 0;
-  }
-}
-
-/**
- * @brief Chooses the scanner context after a token has been emitted.
- */
-ScannerContext scanner_context_after(const TokenType previous_type) {
-  return scanner_allows_regex_after(previous_type)
-             ? SCANNER_CONTEXT_EXPECT_REGEX
-             : SCANNER_CONTEXT_DEFAULT;
-}
-
-/**
  * @brief Returns the DFA entry state for a given scanner context.
  */
 LexerState scanner_entry_state_for_context(const ScannerContext context) {
@@ -164,8 +61,7 @@ int scanner_match_longest(Scanner *sc, const LexerState entry_state,
  * @brief Convenience wrapper that combines regex-context selection and
  * maximal munch.
  */
-int scanner_match_longest_after(Scanner *sc, const TokenType previous_type,
-                                ScannerContext *used_context,
+int scanner_match_longest_after(Scanner *sc, ScannerContext *used_context,
                                 size_t *consumed_length) {
   const ScannerContext default_context = SCANNER_CONTEXT_DEFAULT;
 
@@ -261,14 +157,6 @@ void scanner_advance(Scanner *sc, size_t n) {
       break;
     }
   }
-}
-
-int scanner_match(Scanner *sc, const char expected) {
-  if (scanner_peek(sc, 0) == expected) {
-    scanner_next(sc);
-    return 1;
-  }
-  return 0;
 }
 
 size_t scanner_position(const Scanner *sc) { return sc->pos; }
