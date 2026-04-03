@@ -244,7 +244,12 @@ int scanner_next(Scanner *sc) {
         sc->line++;
         sc->column = 1;
     } else {
-        sc->column++;
+        // Only increment column for ASCII characters and UTF-8 leading bytes
+        // Skip UTF-8 continuation bytes (0x80-0xBF)
+        const unsigned char ub = (unsigned char) c;
+        if (ub < 0x80 || ub >= 0xC0) {
+            sc->column++;
+        }
     }
     return c;
 }
