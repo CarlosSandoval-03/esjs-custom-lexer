@@ -52,7 +52,7 @@
   X("nulo")                        \
   X("verdadero")                   \
   X("indefinido")                  \
-  X("infinito")                    \
+  X("Infinito")                    \
   X("NuN")                         \
   X("ambienteGlobal")              \
   X("consola")                     \
@@ -89,7 +89,7 @@
   X("registrarTiempo")             \
   X("marcaDeTiempo")               \
   X("rastrear")                    \
-  X("adventercia")                 \
+  X("advertencia")                 \
   X("enPosicion")                  \
   X("caracterEn")                  \
   X("codigoDeCaracterEn")          \
@@ -102,7 +102,7 @@
   X("ultimoIndiceDe")              \
   X("compararLocalizada")          \
   X("coincidir")                   \
-  X("coindicirTodo")               \
+  X("coincidirTodo")               \
   X("normalizar")                  \
   X("rellenarAlFinal")             \
   X("rellenarAlComienzo")          \
@@ -116,9 +116,9 @@
   X("comienzaCon")                 \
   X("subcadena")                   \
   X("aMinusculasLocalizada")       \
-  X("AMayusculasLocalizada")       \
-  X("aMinuscula")                  \
-  X("aMayuscula")                  \
+  X("aMayusculasLocalizada")       \
+  X("aMinusculas")                 \
+  X("aMayusculas")                 \
   X("aCadena")                     \
   X("recortarEspacios")            \
   X("recortarEspaciosAlFinal")     \
@@ -252,6 +252,9 @@
   X("rechaza")                     \
   X("resuelve")                    \
   X("luego")                       \
+  X("juntar")                      \
+  X("claves")                      \
+  X("puntoDeCodigoEn")             \
   X("esNulo")
 
 /**
