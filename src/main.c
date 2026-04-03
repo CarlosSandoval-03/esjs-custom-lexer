@@ -1,17 +1,49 @@
 #include <stdio.h>
-#include "../include/buffer.h"
 
-int main(void) {
-    Buffer buf;
-    int c;
-    size_t i = 0;
+#include "../include/lexer.h"
 
-    buffer_init(&buf, stdin);
-    while ((c = buffer_get(&buf, i)) != EOF) {
-        printf("buf[%zu] = '%c'\n", i, c);
-        i++;
+static void print_token(const Token *token) {
+    const char *name = token_type_to_string(token->type);
+
+    if (token->type == TOKEN_ERROR) {
+        printf(">>> Error lexico (linea: %d, posicion: %d)\n", token->line,
+               token->column);
+        return;
     }
 
-    buffer_destroy(&buf);
+    if (token->type == TOKEN_KEYWORD) {
+        printf("<%.*s,%d,%d>\n", (int) token->lexeme_length, token->lexeme_start,
+               token->line, token->column);
+        return;
+    }
+
+    if (token->type == TOKEN_IDENTIFIER || token->type == TOKEN_NUMBER ||
+        token->type == TOKEN_STRING || token->type == TOKEN_REGEX) {
+        printf("<%s,%.*s,%d,%d>\n", name, (int) token->lexeme_length,
+               token->lexeme_start, token->line, token->column);
+        return;
+    }
+
+    printf("<%s,%d,%d>\n", name, token->line, token->column);
+}
+
+int main(void) {
+    Buffer buffer;
+    Lexer lexer;
+    Token token;
+
+    dfa_init();
+    buffer_init(&buffer, stdin);
+    lexer_init(&lexer, &buffer);
+
+    while (lexer_next_token(&lexer, &token)) {
+        if (token.type == TOKEN_EOF) {
+            break;
+        }
+
+        print_token(&token);
+    }
+
+    buffer_destroy(&buffer);
     return 0;
 }

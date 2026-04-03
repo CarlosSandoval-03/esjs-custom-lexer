@@ -3,6 +3,8 @@
 static const char *TOKEN_TYPE_NAMES[] = {
     [TOKEN_IDENTIFIER] = "id",
     [TOKEN_NUMBER] = "tkn_num",
+    [TOKEN_STRING] = "tkn_str",
+    [TOKEN_REGEX] = "tkn_regex",
 
     [TOKEN_PLUS] = "tkn_plus",
     [TOKEN_MINUS] = "tkn_minus",
@@ -19,7 +21,7 @@ static const char *TOKEN_TYPE_NAMES[] = {
     [TOKEN_PLUS_ASSIGN] = "tkn_plus_assign",
     [TOKEN_POWER_ASSIGN] = "tkn_power_assign",
 
-    [TOKEN_EQUAL] = "tkn_equal",
+    [TOKEN_EQUAL] = "equal",
     [TOKEN_STRICT_EQUAL] = "tkn_strict_equal",
     [TOKEN_NOT_EQUAL] = "tkn_neq",
     [TOKEN_STRICT_NOT_EQUAL] = "tkn_strict_neq",
@@ -64,7 +66,7 @@ static const char *TOKEN_TYPE_NAMES[] = {
 };
 
 const char *token_type_to_string(const TokenType type) {
-    if (type < 0 || type >= _TOKEN_TYPE_COUNT) {
+    if (type < 0 || type >= _TOKEN_TYPE_ENUM_COUNT) {
         return "";
     }
     return TOKEN_TYPE_NAMES[type] ? TOKEN_TYPE_NAMES[type] : "";

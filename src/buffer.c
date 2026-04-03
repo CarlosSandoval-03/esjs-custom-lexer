@@ -5,8 +5,9 @@
 #define BUFFER_INITIAL_CAPACITY 128
 
 static void buffer_grow(Buffer *buf) {
-    const size_t new_capacity = (buf->capacity == 0) ? BUFFER_INITIAL_CAPACITY : buf->capacity * 2;
-    char *new_data = (char *)realloc(buf->data, new_capacity * sizeof(char));
+    const size_t new_capacity =
+            (buf->capacity == 0) ? BUFFER_INITIAL_CAPACITY : buf->capacity * 2;
+    char *new_data = (char *) realloc(buf->data, new_capacity * sizeof(char));
 
     if (new_data == NULL) {
         fprintf(stderr, "Error: The buffer could not be expanded.\n");
@@ -30,7 +31,7 @@ static void buffer_fill_to(Buffer *buf, const size_t pos) {
             buffer_grow(buf);
         }
 
-        buf->data[buf->length++] = (char)c;
+        buf->data[buf->length++] = (char) c;
     }
 }
 
@@ -58,9 +59,7 @@ int buffer_get(Buffer *buf, const size_t pos) {
         return EOF;
     }
 
-    return (unsigned char)buf->data[pos];
+    return (unsigned char) buf->data[pos];
 }
 
-int buffer_is_eof(const Buffer *buf) {
-    return buf->eof;
-}
+int buffer_is_eof(const Buffer *buf) { return buf->eof; }
