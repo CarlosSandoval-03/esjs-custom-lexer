@@ -214,7 +214,7 @@ int lexer_next_token(Lexer *lexer, Token *token) {
       lexeme_start, matched_length, matched_context);
   size_t lexeme_length = matched_length;
 
-  if (type == TOKEN_STRING && matched_length >= 2) {
+  if ((type == TOKEN_STRING || type == TOKEN_REGEX) && matched_length >= 2) {
     lexeme_start += 1;
     lexeme_length -= 2;
   }
