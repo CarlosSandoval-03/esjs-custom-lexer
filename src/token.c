@@ -4,7 +4,7 @@ static const char *TOKEN_TYPE_NAMES[] = {
     [TOKEN_IDENTIFIER] = "id",
     [TOKEN_NUMBER] = "tkn_num",
     [TOKEN_STRING] = "tkn_str",
-    [TOKEN_REGEX] = "tkn_regex",
+    [TOKEN_REGEX] = "tkn_reg",
 
     [TOKEN_PLUS] = "tkn_plus",
     [TOKEN_MINUS] = "tkn_minus",
