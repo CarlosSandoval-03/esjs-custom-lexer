@@ -25,7 +25,6 @@ static void dfa_init_accepting_states(void) {
   // Valid final states
   dfa_accepting_state[STATE_IDENTIFIER] = 1;
   dfa_accepting_state[STATE_NUMBER] = 1;
-  dfa_accepting_state[STATE_DOT_NUMBER] = 1;  // Supports: 10.
   dfa_accepting_state[STATE_FLOAT_NUMBER] = 1;
 
   dfa_accepting_state[STATE_DONE] = 1;

@@ -89,11 +89,11 @@ static TokenType lexer_token_type_from_lexeme(const char *lexeme, size_t length,
 
   switch (first) {
     case '.':
-      if (length == 3) {
-        return TOKEN_SPREAD;
-      }
       if (length > 1 && lexeme[1] >= '0' && lexeme[1] <= '9') {
         return TOKEN_NUMBER;
+      }
+      if (length == 3) {
+        return TOKEN_SPREAD;
       }
       return TOKEN_PERIOD;
 
