@@ -2,11 +2,21 @@
 
 #include "../include/keywords.h"
 
-static void lexer_skip_layout_and_comments(Lexer *lexer) {
+static void lexer_fill_token(Token *token, TokenType type,
+                             const char *lexeme_start, size_t lexeme_length,
+                             int line, int column) {
+  token->type = type;
+  token->lexeme_start = lexeme_start;
+  token->lexeme_length = lexeme_length;
+  token->line = line;
+  token->column = column;
+}
+
+static int lexer_skip_layout_and_comments(Lexer *lexer, Token *token) {
   for (;;) {
     const int c = scanner_peek(&lexer->scanner, 0);
     if (c == EOF) {
-      return;
+      return 1;
     }
 
     if (c == ' ' || c == '\t' || c == '\r' || c == '\n' || c == '\f' ||
@@ -26,21 +36,32 @@ static void lexer_skip_layout_and_comments(Lexer *lexer) {
     }
 
     if (c == '/' && scanner_peek(&lexer->scanner, 1) == '*') {
+      const size_t comment_pos = scanner_position(&lexer->scanner);
+      const int comment_line = scanner_line(&lexer->scanner);
+      const int comment_column = scanner_column(&lexer->scanner);
       scanner_next(&lexer->scanner);
       scanner_next(&lexer->scanner);
+      int closed = 0;
       while (scanner_peek(&lexer->scanner, 0) != EOF) {
         if (scanner_peek(&lexer->scanner, 0) == '*' &&
             scanner_peek(&lexer->scanner, 1) == '/') {
           scanner_next(&lexer->scanner);
           scanner_next(&lexer->scanner);
+          closed = 1;
           break;
         }
         scanner_next(&lexer->scanner);
       }
+      if (!closed) {
+        lexer_fill_token(token, TOKEN_ERROR,
+                         lexer->scanner.buffer->data + comment_pos, 2,
+                         comment_line, comment_column);
+        return 0;
+      }
       continue;
     }
 
-    return;
+    return 1;
   }
 }
 
@@ -157,22 +178,14 @@ static TokenType lexer_token_type_from_lexeme(const char *lexeme, size_t length,
   }
 }
 
-static void lexer_fill_token(Token *token, TokenType type,
-                             const char *lexeme_start, size_t lexeme_length,
-                             int line, int column) {
-  token->type = type;
-  token->lexeme_start = lexeme_start;
-  token->lexeme_length = lexeme_length;
-  token->line = line;
-  token->column = column;
-}
-
 void lexer_init(Lexer *lexer, Buffer *buffer) {
   scanner_init(&lexer->scanner, buffer);
 }
 
 int lexer_next_token(Lexer *lexer, Token *token) {
-  lexer_skip_layout_and_comments(lexer);
+  if (!lexer_skip_layout_and_comments(lexer, token)) {
+    return 1;
+  }
 
   const size_t start_pos = scanner_position(&lexer->scanner);
   const int start_line = scanner_line(&lexer->scanner);
