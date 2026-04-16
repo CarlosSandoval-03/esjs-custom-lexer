@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['last_20accepting_20state_20tracking_0',['4. Maximal munch via last-accepting-state tracking',['../d0/d30/md_README.html#autotoc_md20',1,'']]],
+  ['lazy_20input_20buffer_20with_20full_20retention_1',['3. Lazy input buffer with full retention',['../d0/d30/md_README.html#autotoc_md19',1,'']]],
+  ['length_2',['length',['../d6/d3a/structBuffer.html#ab017cc01197319698565f0eab23148ea',1,'Buffer']]],
+  ['lexeme_5flength_3',['lexeme_length',['../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309',1,'Token']]],
+  ['lexeme_5fstart_4',['lexeme_start',['../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d',1,'Token']]],
+  ['lexer_5',['Lexer',['../dd/d0b/structLexer.html',1,'']]],
+  ['lexer_6',['esjs-custom-lexer',['../d0/d30/md_README.html',1,'']]],
+  ['lexer_20not_20the_20scanner_7',['10. Delimiter stripping in the Lexer, not the Scanner',['../d0/d30/md_README.html#autotoc_md26',1,'']]],
+  ['lexer_2ec_8',['lexer.c',['../d8/d33/lexer_8c.html',1,'']]],
+  ['lexer_2eh_9',['lexer.h',['../d5/df3/lexer_8h.html',1,'']]],
+  ['lexer_5finit_10',['lexer_init',['../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590',1,'lexer_init(Lexer *lexer, Buffer *buffer):&#160;lexer.c'],['../d8/d33/lexer_8c.html#a117257e9d382f77c82f9a53be3e12590',1,'lexer_init(Lexer *lexer, Buffer *buffer):&#160;lexer.c']]],
+  ['lexer_5fnext_5ftoken_11',['lexer_next_token',['../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625',1,'lexer_next_token(Lexer *lexer, Token *token):&#160;lexer.c'],['../d8/d33/lexer_8c.html#ac626a44fe31c24fd5bf3fc084fd5b625',1,'lexer_next_token(Lexer *lexer, Token *token):&#160;lexer.c']]],
+  ['lexical_20error_12',['11. Unclosed block comment as a lexical error',['../d0/d30/md_README.html#autotoc_md27',1,'']]],
+  ['lexical_20errors_13',['7. Standalone &lt;span class=&quot;tt&quot;&gt;&amp;amp;&lt;/span&gt; and &lt;span class=&quot;tt&quot;&gt;|&lt;/span&gt; are lexical errors',['../d0/d30/md_README.html#autotoc_md23',1,'']]],
+  ['license_14',['License',['../d0/d30/md_README.html#autotoc_md42',1,'']]],
+  ['line_15',['line',['../de/d86/structScanner.html#a9edb89b35b29f02d0fabcb8dccea111d',1,'Scanner::line'],['../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd',1,'Token::line']]],
+  ['list_16',['9. X-macro for the keyword list',['../d0/d30/md_README.html#autotoc_md25',1,'']]],
+  ['literal_17',['12. Trailing-dot float is not a valid number literal',['../d0/d30/md_README.html#autotoc_md28',1,'']]],
+  ['literal_20tokens_18',['Literal tokens',['../d0/d30/md_README.html#autotoc_md31',1,'']]]
+];

@@ -1,11 +1,60 @@
+/**
+ * @file keywords.h
+ * @brief EsJS reserved-word inventory and keyword lookup interface.
+ *
+ * EsJS is a Spanish-syntax dialect of JavaScript. This header centralizes
+ * the complete list of reserved words using an X-macro pattern so that the
+ * same list can be reused in multiple contexts (string table generation,
+ * lookup tables, documentation) without duplication.
+ *
+ * Usage of the X-macro:
+ * @code
+ *   // Expand to an array of string literals:
+ *   #define MY_MACRO(word) word,
+ *   static const char *words[] = { ESJS_KEYWORDS(MY_MACRO) };
+ *   #undef MY_MACRO
+ * @endcode
+ *
+ * Source of the reserved word list:
+ *   https://es.js.org/sintaxis/palabras-reservadas
+ */
 #ifndef ESJS_CUSTOM_LEXER_KEYWORDS_H
 #define ESJS_CUSTOM_LEXER_KEYWORDS_H
 
 #include "token.h"
 
-// Centralized ESJS keyword inventory. Keep this list as the single source of
-// truth and reuse it anywhere keyword tables are needed.
-// src: https://es.js.org/sintaxis/palabras-reservadas
+/**
+ * @brief X-macro that enumerates every EsJS reserved word.
+ *
+ * Each invocation of the macro @p X receives one string literal argument
+ * containing a reserved word. Callers define @p X to perform their desired
+ * operation (e.g. emit an array element, a switch case, or a count).
+ *
+ * The list covers:
+ *  - Control-flow keywords: `si`, `sino`, `para`, `mientras`, `hacer`,
+ *    `romper`, `continuar`, `elegir`, `caso`, `porDefecto`.
+ *  - Exception handling: `intentar`, `capturar`, `finalmente`, `lanzar`.
+ *  - Function/generator: `funcion`, `retornar`, `asincrono`, `esperar`,
+ *    `producir`.
+ *  - Class and OOP: `clase`, `extiende`, `constructor`, `super`, `crear`.
+ *  - Module system: `importar`, `exportar`, `desde`, `de`, `en`.
+ *  - Variable declarations: `const`, `var`, `mut`.
+ *  - Type and introspection operators: `tipoDe`, `instanciaDe`, `vacio`,
+ *    `eliminar`.
+ *  - Literal values: `verdadero`, `falso`, `nulo`, `indefinido`, `Infinito`,
+ *    `NuN`.
+ *  - Built-in objects and namespaces: `consola`, `Matriz`, `Cadena`,
+ *    `Numero`, `Fecha`, `Promesa`, `Mate`, `Booleano`, `Funcion`.
+ *  - Console methods: `escribir`, `advertencia`, `error`, `tabla`, etc.
+ *  - String methods: `concatenar`, `incluye`, `reemplazar`, `dividir`, etc.
+ *  - Array methods: `mapear`, `filtrar`, `reducir`, `ordenar`, `rodaja`, etc.
+ *  - Math functions: `raizCuadrada`, `potencia`, `redondear`, `aleatorio`,
+ *    `absoluto`, trigonometric functions, logarithms, etc.
+ *  - Date methods: `obtenerDia`, `obtenerMes`, `establecerFecha`, etc.
+ *  - Promise methods: `luego`, `rechaza`, `resuelve`, `carrera`, etc.
+ *
+ * @param X  Macro to apply to each keyword string literal.
+ */
 #define ESJS_KEYWORDS(X)           \
   X("capturar")                    \
   X("caso")                        \
@@ -258,12 +307,22 @@
   X("esNulo")
 
 /**
- * @brief Looks up a reserved word or literal keyword by lexeme.
+ * @brief Classifies a lexeme as either a reserved keyword or an identifier.
  *
- * @param lexeme Input lexeme.
- * @param length Lexeme length in bytes.
- * @return TokenType Specific keyword token type, or TOKEN_IDENTIFIER when the
- * lexeme is not reserved.
+ * Performs a linear scan of the ESJS_KEYWORDS table. A match requires both
+ * equal length and equal byte content (case-sensitive, no null terminator
+ * needed in @p lexeme).
+ *
+ * The function intentionally does not distinguish between specific keyword
+ * token types (TOKEN_IF, TOKEN_WHILE, etc.) at this layer; all reserved
+ * words return TOKEN_KEYWORD and the caller maps them to finer-grained types
+ * if needed.
+ *
+ * @param lexeme Pointer to the first byte of the candidate lexeme. The
+ *               string does not need to be null-terminated.
+ * @param length Length of the lexeme in bytes.
+ * @return       TOKEN_KEYWORD if @p lexeme matches a reserved word exactly;
+ *               TOKEN_IDENTIFIER otherwise.
  */
 TokenType keyword_lookup(const char *lexeme, size_t length);
 

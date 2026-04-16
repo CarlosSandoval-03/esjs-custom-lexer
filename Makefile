@@ -8,7 +8,9 @@ TARGET := main
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
-.PHONY: build run clean
+DOCS_DIR := docs
+
+.PHONY: build run clean docs
 
 # Objetivo por defecto
 build: $(TARGET)
@@ -31,3 +33,7 @@ run: build
 
 clean:
 	rm -rf build $(TARGET)
+
+docs:
+	rm -rf $(DOCS_DIR)
+	doxygen
