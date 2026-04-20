@@ -1,25 +1,41 @@
-CC := gcc
-CFLAGS := -Wall -Wextra -std=c11 -Iinclude
+CC       := gcc
+CFLAGS   := -Wall -Wextra -std=c11 -Iinclude
 
-SRC_DIR := src
+SRC_DIR   := src
 BUILD_DIR := build/obj
-TARGET := main
 
-SRCS := $(wildcard $(SRC_DIR)/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
+# CLI executable
+TARGET     := main
+# Static library
+LIB_TARGET := libesjs_lexer.a
+
+# All source files
+SRCS     := $(wildcard $(SRC_DIR)/*.c)
+# Library sources — everything except the CLI driver
+LIB_SRCS := $(filter-out $(SRC_DIR)/main.c,$(SRCS))
+
+OBJS     := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
+LIB_OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(LIB_SRCS))
 
 DOCS_DIR := docs
 
-.PHONY: build run clean docs
+.PHONY: build lib run clean docs
 
-# Objetivo por defecto
+# Default: build the CLI executable
 build: $(TARGET)
 
-# Enlaza el ejecutable final en la raiz del proyecto
+# Build the static library only
+lib: $(LIB_TARGET)
+
+# ── Static library ────────────────────────────────────────────────────────────
+$(LIB_TARGET): $(LIB_OBJS)
+	ar rcs $@ $^
+
+# ── CLI executable (links against library objects) ────────────────────────────
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# Compila cada fuente en build/obj/*.o
+# ── Object files ──────────────────────────────────────────────────────────────
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -32,7 +48,7 @@ run: build
 	@./$(TARGET)
 
 clean:
-	rm -rf build $(TARGET)
+	rm -rf build $(TARGET) $(LIB_TARGET)
 
 docs:
 	rm -rf $(DOCS_DIR)

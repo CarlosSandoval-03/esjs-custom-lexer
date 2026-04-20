@@ -187,6 +187,13 @@ typedef enum {
  * For TOKEN_STRING and TOKEN_REGEX the delimiters (quotes or slashes) are
  * excluded: @c lexeme_start points to the first content character and
  * @c lexeme_length counts only the content bytes.
+ *
+ * @warning **`lexeme_start` is invalidated by buffer reallocation.** The
+ *          Buffer grows its internal heap array on demand. If more tokens are
+ *          read after a Token is stored, a subsequent realloc() may move the
+ *          array to a new address, leaving `lexeme_start` as a dangling
+ *          pointer. Copy the lexeme bytes (e.g. with strndup or memcpy) before
+ *          calling lexer_next_token() again if you need to retain the text.
  */
 typedef struct {
   TokenType   type;          /**< Semantic category of this token.          */

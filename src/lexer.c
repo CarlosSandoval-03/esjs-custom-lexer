@@ -32,6 +32,7 @@
  */
 #include "../include/lexer.h"
 
+#include "../include/dfa.h"
 #include "../include/keywords.h"
 
 /**
@@ -271,6 +272,7 @@ static TokenType lexer_token_type_from_lexeme(const char *lexeme, size_t length,
  *               lifetime.
  */
 void lexer_init(Lexer *lexer, Buffer *buffer) {
+  dfa_init();
   scanner_init(&lexer->scanner, buffer);
 }
 

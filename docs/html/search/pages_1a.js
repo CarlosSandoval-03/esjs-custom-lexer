@@ -1,13 +1,18 @@
 var searchData=
 [
-  ['table_20driven_20dfa_20over_20hand_20coded_20switch_20chains_0',['1. Table-driven DFA over hand-coded switch chains',['../d0/d30/md_README.html#autotoc_md17',1,'']]],
-  ['table_20of_20contents_1',['Table of Contents',['../d0/d30/md_README.html#autotoc_md2',1,'']]],
-  ['the_20dfa_20alphabet_2',['2. Character classes as the DFA alphabet',['../d0/d30/md_README.html#autotoc_md18',1,'']]],
-  ['the_20keyword_20list_3',['9. X-macro for the keyword list',['../d0/d30/md_README.html#autotoc_md25',1,'']]],
-  ['the_20lexer_20not_20the_20scanner_4',['10. Delimiter stripping in the Lexer, not the Scanner',['../d0/d30/md_README.html#autotoc_md26',1,'']]],
-  ['the_20scanner_5',['10. Delimiter stripping in the Lexer, not the Scanner',['../d0/d30/md_README.html#autotoc_md26',1,'']]],
-  ['token_20reference_6',['Token Reference',['../d0/d30/md_README.html#autotoc_md30',1,'']]],
-  ['tokens_7',['tokens',['../d0/d30/md_README.html#autotoc_md32',1,'Keyword tokens'],['../d0/d30/md_README.html#autotoc_md31',1,'Literal tokens'],['../d0/d30/md_README.html#autotoc_md33',1,'Operator and punctuation tokens']]],
-  ['tracking_8',['4. Maximal munch via last-accepting-state tracking',['../d0/d30/md_README.html#autotoc_md20',1,'']]],
-  ['trailing_20dot_20float_20is_20not_20a_20valid_20number_20literal_9',['12. Trailing-dot float is not a valid number literal',['../d0/d30/md_README.html#autotoc_md28',1,'']]]
+  ['safe_0',['safe',['../d0/d30/md_README.html#autotoc_md50',1,'What is not safe'],['../d0/d30/md_README.html#autotoc_md49',1,'What is safe']]],
+  ['safe_20multi_20threading_20pattern_1',['Safe multi-threading pattern',['../d0/d30/md_README.html#autotoc_md54',1,'']]],
+  ['safety_2',['Thread Safety',['../d0/d30/md_README.html#autotoc_md48',1,'']]],
+  ['scanner_3',['10. Delimiter stripping in the Lexer, not the Scanner',['../d0/d30/md_README.html#autotoc_md28',1,'']]],
+  ['separate_20state_4',['6. Regex entry via a separate state',['../d0/d30/md_README.html#autotoc_md24',1,'']]],
+  ['shared_20between_20threads_5',['2. &lt;span class=&quot;tt&quot;&gt;Buffer&lt;/span&gt; shared between threads',['../d0/d30/md_README.html#autotoc_md52',1,'']]],
+  ['standalone_20and_20are_20lexical_20errors_6',['7. Standalone &lt;span class=&quot;tt&quot;&gt;&amp;amp;&lt;/span&gt; and &lt;span class=&quot;tt&quot;&gt;|&lt;/span&gt; are lexical errors',['../d0/d30/md_README.html#autotoc_md25',1,'']]],
+  ['start_7',['Quick start',['../d0/d30/md_README.html#autotoc_md43',1,'']]],
+  ['state_8',['6. Regex entry via a separate state',['../d0/d30/md_README.html#autotoc_md24',1,'']]],
+  ['state_20groups_9',['State Groups',['../d0/d30/md_README.html#autotoc_md14',1,'']]],
+  ['state_20tracking_10',['4. Maximal munch via last-accepting-state tracking',['../d0/d30/md_README.html#autotoc_md22',1,'']]],
+  ['states_11',['Accepting States',['../d0/d30/md_README.html#autotoc_md16',1,'']]],
+  ['stripping_20in_20the_20lexer_20not_20the_20scanner_12',['10. Delimiter stripping in the Lexer, not the Scanner',['../d0/d30/md_README.html#autotoc_md28',1,'']]],
+  ['summary_13',['API summary',['../d0/d30/md_README.html#autotoc_md46',1,'']]],
+  ['switch_20chains_14',['1. Table-driven DFA over hand-coded switch chains',['../d0/d30/md_README.html#autotoc_md19',1,'']]]
 ];
