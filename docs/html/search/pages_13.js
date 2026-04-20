@@ -7,7 +7,7 @@ var searchData=
   ['lexical_20error_4',['11. Unclosed block comment as a lexical error',['../d0/d30/md_README.html#autotoc_md29',1,'']]],
   ['lexical_20errors_5',['7. Standalone &lt;span class=&quot;tt&quot;&gt;&amp;amp;&lt;/span&gt; and &lt;span class=&quot;tt&quot;&gt;|&lt;/span&gt; are lexical errors',['../d0/d30/md_README.html#autotoc_md25',1,'']]],
   ['library_6',['Using as a Library',['../d0/d30/md_README.html#autotoc_md42',1,'']]],
-  ['license_7',['License',['../d0/d30/md_README.html#autotoc_md50',1,'']]],
+  ['license_7',['License',['../d0/d30/md_README.html#autotoc_md58',1,'']]],
   ['linking_8',['Linking',['../da/de4/esjs__lexer_8h.html#autotoc_md1',1,'']]],
   ['linking_20manually_20gcc_20make_9',['Linking manually (GCC / Make)',['../d0/d30/md_README.html#autotoc_md45',1,'']]],
   ['linking_20with_20cmake_10',['Linking with CMake',['../d0/d30/md_README.html#autotoc_md44',1,'']]],

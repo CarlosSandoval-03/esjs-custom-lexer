@@ -93,30 +93,30 @@ $(function(){initNavTree('d5/df3/lexer_8h_source.html','../../',''); });
 </div><!--header-->
 <div class="contents">
 <a href="../../d5/df3/lexer_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#ifndef ESJS_CUSTOM_LEXER_LEXER_H</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#define ESJS_CUSTOM_LEXER_LEXER_H</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#include &quot;<a class="code" href="../../db/d62/scanner_8h.html">scanner.h</a>&quot;</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
-<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="../../dd/d0b/structLexer.html">   36</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">   37</a></span>  <a class="code hl_struct" href="../../de/d86/structScanner.html">Scanner</a> <a class="code hl_variable" href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">scanner</a>; </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>} <a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#ifndef ESJS_CUSTOM_LEXER_LEXER_H</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#define ESJS_CUSTOM_LEXER_LEXER_H</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;<a class="code" href="../../db/d62/scanner_8h.html">scanner.h</a>&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../dd/d0b/structLexer.html">   43</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">   44</a></span>  <a class="code hl_struct" href="../../de/d86/structScanner.html">Scanner</a> <a class="code hl_variable" href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">scanner</a>; </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>} <a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a>;</div>
 </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a>(<a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a> *lexer, <a class="code hl_struct" href="../../d6/d3a/structBuffer.html">Buffer</a> *buffer);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a>(<a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a> *lexer, <a class="code hl_struct" href="../../df/dcd/structToken.html">Token</a> *token);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#endif  </span><span class="comment">// ESJS_CUSTOM_LEXER_LEXER_H</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a>(<a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a> *lexer, <a class="code hl_struct" href="../../d6/d3a/structBuffer.html">Buffer</a> *buffer);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a>(<a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a> *lexer, <a class="code hl_struct" href="../../df/dcd/structToken.html">Token</a> *token);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="preprocessor">#endif  </span><span class="comment">// ESJS_CUSTOM_LEXER_LEXER_H</span></div>
 <div class="ttc" id="alexer_8h_html_a117257e9d382f77c82f9a53be3e12590"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a></div><div class="ttdeci">void lexer_init(Lexer *lexer, Buffer *buffer)</div><div class="ttdoc">Initializes the Lexer over an input buffer.</div><div class="ttdef"><b>Definition</b> lexer.c:274</div></div>
 <div class="ttc" id="alexer_8h_html_ac626a44fe31c24fd5bf3fc084fd5b625"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a></div><div class="ttdeci">int lexer_next_token(Lexer *lexer, Token *token)</div><div class="ttdoc">Scans and returns the next token from the input.</div><div class="ttdef"><b>Definition</b> lexer.c:304</div></div>
 <div class="ttc" id="ascanner_8h_html"><div class="ttname"><a href="../../db/d62/scanner_8h.html">scanner.h</a></div><div class="ttdoc">Low-level DFA runner and position tracker that sits between the Buffer and the Lexer.</div></div>
-<div class="ttc" id="astructBuffer_html"><div class="ttname"><a href="../../d6/d3a/structBuffer.html">Buffer</a></div><div class="ttdoc">Lazily-loaded byte buffer backed by a FILE stream.</div><div class="ttdef"><b>Definition</b> buffer.h:36</div></div>
-<div class="ttc" id="astructLexer_html"><div class="ttname"><a href="../../dd/d0b/structLexer.html">Lexer</a></div><div class="ttdoc">Lexer state: a thin wrapper around a Scanner.</div><div class="ttdef"><b>Definition</b> lexer.h:36</div></div>
-<div class="ttc" id="astructLexer_html_a4e784e8f5c39726b1b4a08cee4b6f0ba"><div class="ttname"><a href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">Lexer::scanner</a></div><div class="ttdeci">Scanner scanner</div><div class="ttdef"><b>Definition</b> lexer.h:37</div></div>
+<div class="ttc" id="astructBuffer_html"><div class="ttname"><a href="../../d6/d3a/structBuffer.html">Buffer</a></div><div class="ttdoc">Lazily-loaded byte buffer backed by a FILE stream.</div><div class="ttdef"><b>Definition</b> buffer.h:40</div></div>
+<div class="ttc" id="astructLexer_html"><div class="ttname"><a href="../../dd/d0b/structLexer.html">Lexer</a></div><div class="ttdoc">Lexer state: a thin wrapper around a Scanner.</div><div class="ttdef"><b>Definition</b> lexer.h:43</div></div>
+<div class="ttc" id="astructLexer_html_a4e784e8f5c39726b1b4a08cee4b6f0ba"><div class="ttname"><a href="../../dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba">Lexer::scanner</a></div><div class="ttdeci">Scanner scanner</div><div class="ttdef"><b>Definition</b> lexer.h:44</div></div>
 <div class="ttc" id="astructScanner_html"><div class="ttname"><a href="../../de/d86/structScanner.html">Scanner</a></div><div class="ttdoc">Cursor state over the input Buffer.</div><div class="ttdef"><b>Definition</b> scanner.h:59</div></div>
-<div class="ttc" id="astructToken_html"><div class="ttname"><a href="../../df/dcd/structToken.html">Token</a></div><div class="ttdoc">Lightweight, non-owning view of a single lexeme in the input buffer.</div><div class="ttdef"><b>Definition</b> token.h:191</div></div>
+<div class="ttc" id="astructToken_html"><div class="ttname"><a href="../../df/dcd/structToken.html">Token</a></div><div class="ttdoc">Lightweight, non-owning view of a single lexeme in the input buffer.</div><div class="ttdef"><b>Definition</b> token.h:198</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

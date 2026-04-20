@@ -106,6 +106,7 @@ Table of Contents</h1>
 <li>Token Reference</li>
 <li>Building and Running</li>
 <li>Using as a Library</li>
+<li>Thread Safety</li>
 <li>Output Format</li>
 </ul>
 <hr  />
@@ -499,14 +500,14 @@ Quick start</h2>
 <div class="ttc" id="alexer_8h_html_a117257e9d382f77c82f9a53be3e12590"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a></div><div class="ttdeci">void lexer_init(Lexer *lexer, Buffer *buffer)</div><div class="ttdoc">Initializes the Lexer over an input buffer.</div><div class="ttdef"><b>Definition</b> lexer.c:274</div></div>
 <div class="ttc" id="alexer_8h_html_ac626a44fe31c24fd5bf3fc084fd5b625"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a></div><div class="ttdeci">int lexer_next_token(Lexer *lexer, Token *token)</div><div class="ttdoc">Scans and returns the next token from the input.</div><div class="ttdef"><b>Definition</b> lexer.c:304</div></div>
 <div class="ttc" id="amain_8c_html_a840291bc02cba5474a4cb46a9b9566fe"><div class="ttname"><a href="../../d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a></div><div class="ttdeci">int main(void)</div><div class="ttdoc">Entry point: initializes the pipeline and drives the token loop.</div><div class="ttdef"><b>Definition</b> main.c:99</div></div>
-<div class="ttc" id="astructBuffer_html"><div class="ttname"><a href="../../d6/d3a/structBuffer.html">Buffer</a></div><div class="ttdoc">Lazily-loaded byte buffer backed by a FILE stream.</div><div class="ttdef"><b>Definition</b> buffer.h:36</div></div>
-<div class="ttc" id="astructLexer_html"><div class="ttname"><a href="../../dd/d0b/structLexer.html">Lexer</a></div><div class="ttdoc">Lexer state: a thin wrapper around a Scanner.</div><div class="ttdef"><b>Definition</b> lexer.h:36</div></div>
-<div class="ttc" id="astructToken_html"><div class="ttname"><a href="../../df/dcd/structToken.html">Token</a></div><div class="ttdoc">Lightweight, non-owning view of a single lexeme in the input buffer.</div><div class="ttdef"><b>Definition</b> token.h:191</div></div>
-<div class="ttc" id="astructToken_html_a1f1d8ce91307dd46c151bc7e1b73685a"><div class="ttname"><a href="../../df/dcd/structToken.html#a1f1d8ce91307dd46c151bc7e1b73685a">Token::column</a></div><div class="ttdeci">int column</div><div class="ttdef"><b>Definition</b> token.h:196</div></div>
-<div class="ttc" id="astructToken_html_a225d4ce1b34368d794fdcb9575180309"><div class="ttname"><a href="../../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309">Token::lexeme_length</a></div><div class="ttdeci">size_t lexeme_length</div><div class="ttdef"><b>Definition</b> token.h:194</div></div>
-<div class="ttc" id="astructToken_html_a4b96c2a31d7c374fd2bd1986794f80dd"><div class="ttname"><a href="../../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd">Token::line</a></div><div class="ttdeci">int line</div><div class="ttdef"><b>Definition</b> token.h:195</div></div>
-<div class="ttc" id="astructToken_html_a67919af9f3a80dc0b28a0ab1e6d5bf8a"><div class="ttname"><a href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">Token::type</a></div><div class="ttdeci">TokenType type</div><div class="ttdef"><b>Definition</b> token.h:192</div></div>
-<div class="ttc" id="astructToken_html_aeac07c6280610fa128b113ba7eed560d"><div class="ttname"><a href="../../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d">Token::lexeme_start</a></div><div class="ttdeci">const char * lexeme_start</div><div class="ttdef"><b>Definition</b> token.h:193</div></div>
+<div class="ttc" id="astructBuffer_html"><div class="ttname"><a href="../../d6/d3a/structBuffer.html">Buffer</a></div><div class="ttdoc">Lazily-loaded byte buffer backed by a FILE stream.</div><div class="ttdef"><b>Definition</b> buffer.h:40</div></div>
+<div class="ttc" id="astructLexer_html"><div class="ttname"><a href="../../dd/d0b/structLexer.html">Lexer</a></div><div class="ttdoc">Lexer state: a thin wrapper around a Scanner.</div><div class="ttdef"><b>Definition</b> lexer.h:43</div></div>
+<div class="ttc" id="astructToken_html"><div class="ttname"><a href="../../df/dcd/structToken.html">Token</a></div><div class="ttdoc">Lightweight, non-owning view of a single lexeme in the input buffer.</div><div class="ttdef"><b>Definition</b> token.h:198</div></div>
+<div class="ttc" id="astructToken_html_a1f1d8ce91307dd46c151bc7e1b73685a"><div class="ttname"><a href="../../df/dcd/structToken.html#a1f1d8ce91307dd46c151bc7e1b73685a">Token::column</a></div><div class="ttdeci">int column</div><div class="ttdef"><b>Definition</b> token.h:203</div></div>
+<div class="ttc" id="astructToken_html_a225d4ce1b34368d794fdcb9575180309"><div class="ttname"><a href="../../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309">Token::lexeme_length</a></div><div class="ttdeci">size_t lexeme_length</div><div class="ttdef"><b>Definition</b> token.h:201</div></div>
+<div class="ttc" id="astructToken_html_a4b96c2a31d7c374fd2bd1986794f80dd"><div class="ttname"><a href="../../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd">Token::line</a></div><div class="ttdeci">int line</div><div class="ttdef"><b>Definition</b> token.h:202</div></div>
+<div class="ttc" id="astructToken_html_a67919af9f3a80dc0b28a0ab1e6d5bf8a"><div class="ttname"><a href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">Token::type</a></div><div class="ttdeci">TokenType type</div><div class="ttdef"><b>Definition</b> token.h:199</div></div>
+<div class="ttc" id="astructToken_html_aeac07c6280610fa128b113ba7eed560d"><div class="ttname"><a href="../../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d">Token::lexeme_start</a></div><div class="ttdeci">const char * lexeme_start</div><div class="ttdef"><b>Definition</b> token.h:200</div></div>
 <div class="ttc" id="atoken_8h_html_aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc"><div class="ttname"><a href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc">TOKEN_EOF</a></div><div class="ttdeci">@ TOKEN_EOF</div><div class="ttdef"><b>Definition</b> token.h:106</div></div>
 <div class="ttc" id="atoken_8h_html_aa520fbf142ba1e7e659590c07da31921abbfc577192f2423b39a5f693e260b615"><div class="ttname"><a href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921abbfc577192f2423b39a5f693e260b615">TOKEN_ERROR</a></div><div class="ttdeci">@ TOKEN_ERROR</div><div class="ttdef"><b>Definition</b> token.h:107</div></div>
 <div class="ttc" id="atoken_8h_html_af658bbc88d277ff1a3b93f99a11d26f3"><div class="ttname"><a href="../../d1/d07/token_8h.html#af658bbc88d277ff1a3b93f99a11d26f3">token_type_to_string</a></div><div class="ttdeci">const char * token_type_to_string(TokenType type)</div><div class="ttdoc">Maps a TokenType to its canonical string name used in output.</div><div class="ttdef"><b>Definition</b> token.c:118</div></div>
@@ -563,6 +564,67 @@ API summary</h2>
 </blockquote>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+Thread Safety</h1>
+<p><b>This library is not thread-safe.</b></p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+What is safe</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Component  </th><th class="markdownTableHeadNone">After first <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590" title="Initializes the Lexer over an input buffer.">lexer_init()</a></span> completes  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">dfa_table</span> / <span class="tt">dfa_accepting_state</span>  </td><td class="markdownTableBodyNone">Read-only; concurrent reads from any number of threads are safe  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Independent <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html" title="Lazily-loaded byte buffer backed by a FILE stream.">Buffer</a></span> + <span class="tt"><a class="el" href="../../dd/d0b/structLexer.html" title="Lexer state: a thin wrapper around a Scanner.">Lexer</a></span> per thread  </td><td class="markdownTableBodyNone">Fully safe; no shared mutable state  </td></tr>
+</table>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+What is not safe</h2>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+1. DFA initialization race (<span class="tt">dfa_init</span>)</h3>
+<p><span class="tt"><a class="el" href="../../d0/d68/dfa_8c.html#a5669288fa95709a7c0d9e78349dc8357" title="Builds the complete DFA by invoking all rule-setting helpers.">dfa_init()</a></span> uses a plain <span class="tt">static int</span> flag to avoid re-running. Two threads calling <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590" title="Initializes the Lexer over an input buffer.">lexer_init()</a></span> (which calls <span class="tt"><a class="el" href="../../d0/d68/dfa_8c.html#a5669288fa95709a7c0d9e78349dc8357" title="Builds the complete DFA by invoking all rule-setting helpers.">dfa_init()</a></span> internally) simultaneously for the first time can both pass the guard before either sets it, and write the transition tables concurrently. The result is a partially corrupt automaton that produces wrong tokens silently.</p>
+<div class="fragment"><div class="line">Thread A: reads dfa_initialized == 0 → enters init body</div>
+<div class="line">Thread B: reads dfa_initialized == 0 → enters init body  ← race</div>
+<div class="line">Both write dfa_table[] at the same time → undefined behavior</div>
+</div><!-- fragment --><p><b>Fix:</b> call <span class="tt"><a class="el" href="../../d0/d68/dfa_8c.html#a5669288fa95709a7c0d9e78349dc8357" title="Builds the complete DFA by invoking all rule-setting helpers.">dfa_init()</a></span> (or one <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590" title="Initializes the Lexer over an input buffer.">lexer_init()</a></span>) from the main thread before spawning any worker threads. After it returns the tables are read-only for the rest of the program's lifetime.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
+2. <span class="tt">Buffer</span> shared between threads</h3>
+<p><span class="tt"><a class="el" href="../../d5/d08/buffer_8h.html#a38106a07523fc690dadba52a6e63761f" title="Returns the byte at absolute position pos, loading from the stream if necessary.">buffer_get()</a></span> may trigger <span class="tt">buffer_fill_to()</span>, which reads from the <span class="tt">FILE*</span> stream, grows the internal array with <span class="tt">realloc()</span>, and updates <span class="tt">length</span>, <span class="tt">capacity</span>, and <span class="tt">data</span> without any synchronization. Sharing a <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html" title="Lazily-loaded byte buffer backed by a FILE stream.">Buffer</a></span> between two threads causes:</p>
+<ul>
+<li><b>Data races</b> on <span class="tt">length</span> and <span class="tt">capacity</span> (two threads overwrite the same byte slot).</li>
+<li><b>Use-after-free</b> when <span class="tt">realloc()</span> moves the heap block: Thread B holds a stale <span class="tt">data</span> pointer while Thread A already freed the old block.</li>
+</ul>
+<p>Each thread must own its own <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html" title="Lazily-loaded byte buffer backed by a FILE stream.">Buffer</a></span> backed by its own <span class="tt">FILE*</span>.</p>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+3. <span class="tt">Token::lexeme_start</span> invalidated by reallocation</h3>
+<p><span class="tt">lexeme_start</span> is a raw pointer into <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html#aeec1fd4af0ddf6765b0187466d4361b8">Buffer::data</a></span>. Any call to <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625" title="Scans and returns the next token from the input.">lexer_next_token()</a></span> that causes the buffer to grow may move <span class="tt">data</span> to a new address, leaving previously stored <span class="tt">lexeme_start</span> values as dangling pointers. This is a risk even in single-threaded code when tokens are accumulated:</p>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="../../df/dcd/structToken.html">Token</a> tokens[N];</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; N; i++) {</div>
+<div class="line">    <a class="code hl_function" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a>(&amp;lexer, &amp;tokens[i]);</div>
+<div class="line">    <span class="comment">// buffer may realloc here → tokens[0..i-1].lexeme_start can become dangling</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Copy the lexeme bytes before calling <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625" title="Scans and returns the next token from the input.">lexer_next_token()</a></span> again if you need to retain the text:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> copy[256];</div>
+<div class="line">snprintf(copy, <span class="keyword">sizeof</span>(copy), <span class="stringliteral">&quot;%.*s&quot;</span>,</div>
+<div class="line">         (<span class="keywordtype">int</span>)tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309">lexeme_length</a>, tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d">lexeme_start</a>);</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
+Safe multi-threading pattern</h2>
+<div class="fragment"><div class="line"><span class="comment">// ── Main thread ──────────────────────────────────────────────────────────────</span></div>
+<div class="line"><a class="code hl_function" href="../../d0/d68/dfa_8c.html#a5669288fa95709a7c0d9e78349dc8357">dfa_init</a>();  <span class="comment">// initialize once; tables become permanently read-only</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// ── Each worker thread (fully independent) ───────────────────────────────────</span></div>
+<div class="line">FILE  *f = fopen(<span class="stringliteral">&quot;file.esjs&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line"><a class="code hl_struct" href="../../d6/d3a/structBuffer.html">Buffer</a> buf;  <a class="code hl_function" href="../../d5/d08/buffer_8h.html#af7a5e0172411d740c10f0bbd9848f6fc">buffer_init</a>(&amp;buf, f);</div>
+<div class="line"><a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a>  lex;  <a class="code hl_function" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a>(&amp;lex, &amp;buf);  <span class="comment">// dfa_init() is a no-op here</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../df/dcd/structToken.html">Token</a> tok;</div>
+<div class="line"><span class="keywordflow">while</span> (<a class="code hl_function" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a>(&amp;lex, &amp;tok) &amp;&amp; tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">type</a> != <a class="code hl_enumvalue" href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc">TOKEN_EOF</a>) {</div>
+<div class="line">    <span class="comment">/* process tok — copy lexeme_start if it must outlive this iteration */</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="../../d5/d08/buffer_8h.html#a8b8df2617d05b9510ececf279308cb8c">buffer_destroy</a>(&amp;buf);</div>
+<div class="line">fclose(f);</div>
+<div class="ttc" id="adfa_8c_html_a5669288fa95709a7c0d9e78349dc8357"><div class="ttname"><a href="../../d0/d68/dfa_8c.html#a5669288fa95709a7c0d9e78349dc8357">dfa_init</a></div><div class="ttdeci">void dfa_init(void)</div><div class="ttdoc">Builds the complete DFA by invoking all rule-setting helpers.</div><div class="ttdef"><b>Definition</b> dfa.c:489</div></div>
+</div><!-- fragment --><hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 Output Format</h1>
 <div class="fragment"><div class="line">&lt;funcion,1,1&gt;</div>
 <div class="line">&lt;id,calcular,1,9&gt;</div>
@@ -579,7 +641,7 @@ Output Format</h1>
 </div><!-- fragment --><p>On a lexical error, processing stops and the following line is printed:</p>
 <div class="fragment"><div class="line">&gt;&gt;&gt; Error lexico (linea: L, posicion: C)</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 License</h1>
 <p>MIT License. Copyright 2026 Carlos Sandoval. </p>
 </div></div><!-- contents -->

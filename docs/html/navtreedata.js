@@ -67,8 +67,17 @@ var NAVTREE =
         [ "Linking manually (GCC / Make)", "d0/d30/md_README.html#autotoc_md45", null ],
         [ "API summary", "d0/d30/md_README.html#autotoc_md46", null ]
       ] ],
-      [ "Output Format", "d0/d30/md_README.html#autotoc_md48", null ],
-      [ "License", "d0/d30/md_README.html#autotoc_md50", null ]
+      [ "Thread Safety", "d0/d30/md_README.html#autotoc_md48", [
+        [ "What is safe", "d0/d30/md_README.html#autotoc_md49", null ],
+        [ "What is not safe", "d0/d30/md_README.html#autotoc_md50", [
+          [ "1. DFA initialization race (<span class=\"tt\">dfa_init</span>)", "d0/d30/md_README.html#autotoc_md51", null ],
+          [ "2. <span class=\"tt\">Buffer</span> shared between threads", "d0/d30/md_README.html#autotoc_md52", null ],
+          [ "3. <span class=\"tt\">Token::lexeme_start</span> invalidated by reallocation", "d0/d30/md_README.html#autotoc_md53", null ]
+        ] ],
+        [ "Safe multi-threading pattern", "d0/d30/md_README.html#autotoc_md54", null ]
+      ] ],
+      [ "Output Format", "d0/d30/md_README.html#autotoc_md56", null ],
+      [ "License", "d0/d30/md_README.html#autotoc_md58", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -94,7 +103,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"db/d62/scanner_8h.html#a85c910a20eb93e6903be833dfb284d6e"
+"da/de4/esjs__lexer_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

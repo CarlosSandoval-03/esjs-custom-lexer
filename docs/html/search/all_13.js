@@ -15,7 +15,7 @@ var searchData=
   ['lexical_20error_12',['11. Unclosed block comment as a lexical error',['../d0/d30/md_README.html#autotoc_md29',1,'']]],
   ['lexical_20errors_13',['7. Standalone &lt;span class=&quot;tt&quot;&gt;&amp;amp;&lt;/span&gt; and &lt;span class=&quot;tt&quot;&gt;|&lt;/span&gt; are lexical errors',['../d0/d30/md_README.html#autotoc_md25',1,'']]],
   ['library_14',['Using as a Library',['../d0/d30/md_README.html#autotoc_md42',1,'']]],
-  ['license_15',['License',['../d0/d30/md_README.html#autotoc_md50',1,'']]],
+  ['license_15',['License',['../d0/d30/md_README.html#autotoc_md58',1,'']]],
   ['line_16',['line',['../de/d86/structScanner.html#a9edb89b35b29f02d0fabcb8dccea111d',1,'Scanner::line'],['../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd',1,'Token::line']]],
   ['linking_17',['Linking',['../da/de4/esjs__lexer_8h.html#autotoc_md1',1,'']]],
   ['linking_20manually_20gcc_20make_18',['Linking manually (GCC / Make)',['../d0/d30/md_README.html#autotoc_md45',1,'']]],
