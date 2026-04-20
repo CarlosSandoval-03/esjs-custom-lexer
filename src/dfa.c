@@ -32,6 +32,9 @@
 /** 2-D transition table: dfa_table[current_state][char_class] -> next_state. */
 static LexerState dfa_table[_STATE_ENUM_COUNT][_CHAR_ENUM_COUNT];
 
+/** Guards against redundant re-initialization when used as a library. */
+static int dfa_initialized = 0;
+
 /**
  * Accepting-state flags: dfa_accepting_state[state] != 0 when the state
  * represents the end of a valid token.
@@ -484,6 +487,9 @@ static void dfa_set_operator_rules(void) {
  * execution, but the resulting tables are read-only afterward.
  */
 void dfa_init(void) {
+  if (dfa_initialized) return;
+  dfa_initialized = 1;
+
   dfa_set_all(STATE_ERROR);        /* Default: every transition is an error. */
   dfa_init_accepting_states();
 

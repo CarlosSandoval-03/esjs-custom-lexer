@@ -12,10 +12,11 @@ set(HEADERS
         include/scanner.h
         include/lexer.h
         include/keywords.h
+        include/esjs_lexer.h
 )
 
-set(SOURCES
-        src/main.c
+# Library sources — everything except the CLI driver.
+set(LIB_SOURCES
         src/token.c
         src/keywords.c
         src/charclass.c
@@ -23,8 +24,13 @@ set(SOURCES
         src/scanner.c
         src/lexer.c
         src/dfa.c
+        include/esjs_lexer.h
 )
 
-add_executable(esjs_custom_lexer ${SOURCES} ${HEADERS})
+# ── Static library (importable by external projects) ─────────────────────────
+add_library(esjs_lexer STATIC ${LIB_SOURCES} ${HEADERS})
+target_include_directories(esjs_lexer PUBLIC include)
 
-target_include_directories(esjs_custom_lexer PUBLIC include)
+# ── CLI executable (links against the library) ────────────────────────────────
+add_executable(esjs_custom_lexer src/main.c)
+target_link_libraries(esjs_custom_lexer PRIVATE esjs_lexer)

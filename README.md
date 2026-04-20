@@ -16,6 +16,7 @@ recognition engine.
 - [Design Decisions](#design-decisions)
 - [Token Reference](#token-reference)
 - [Building and Running](#building-and-running)
+- [Using as a Library](#using-as-a-library)
 - [Output Format](#output-format)
 
 ---
@@ -95,6 +96,7 @@ responsibility and communicates only with its immediate neighbors.
 | Keywords | `include/keywords.h` | `src/keywords.c` | Reserved-word table and linear lookup |
 | Token | `include/token.h` | `src/token.c` | Token type enum, Token struct, tag strings |
 | Lexer | `include/lexer.h` | `src/lexer.c` | Public API: comment skipping and token dispatch |
+| Public API | `include/esjs_lexer.h` | — | Single-include umbrella header for library users |
 | Driver | — | `src/main.c` | CLI entry point and output formatting |
 
 ---
@@ -402,14 +404,15 @@ A non-exhaustive sample:
 ```bash
 mkdir build && cd build
 cmake ..
-make
+make                          # builds: esjs_custom_lexer (CLI) + esjs_lexer (static lib)
 echo "var x = 42;" | ./esjs_custom_lexer
 ```
 
 ### GNU Make
 
 ```bash
-make build   # Compile
+make build   # Compile the CLI executable
+make lib     # Build libesjs_lexer.a (static library only)
 make run     # Compile and run (reads from stdin)
 make clean   # Remove build artifacts
 ```
@@ -417,7 +420,98 @@ make clean   # Remove build artifacts
 ### Dependencies
 
 - C11-compatible compiler (GCC 5+ or Clang 3.5+)
-- CMake 3.10+ or GNU Make
+- CMake 4.1+ or GNU Make
+
+---
+
+## Using as a Library
+
+The lexer can be embedded in any C project. The single-include entry point is
+`include/esjs_lexer.h`, which re-exports `token.h`, `buffer.h`, and `lexer.h`.
+
+### Quick start
+
+```c
+#include "esjs_lexer.h"
+#include <stdio.h>
+
+int main(void) {
+  FILE *f = fopen("programa.esjs", "r");
+
+  Buffer buf;
+  buffer_init(&buf, f);
+
+  Lexer lexer;
+  lexer_init(&lexer, &buf);   /* also initializes the DFA internally */
+
+  Token tok;
+  while (lexer_next_token(&lexer, &tok)) {
+    if (tok.type == TOKEN_EOF)
+      break;
+    if (tok.type == TOKEN_ERROR) {
+      fprintf(stderr, "error at line %d, col %d\n", tok.line, tok.column);
+      break;
+    }
+    printf("%s  \"%.*s\"  line %d  col %d\n",
+           token_type_to_string(tok.type),
+           (int)tok.lexeme_length, tok.lexeme_start,
+           tok.line, tok.column);
+  }
+
+  buffer_destroy(&buf);
+  fclose(f);
+  return 0;
+}
+```
+
+### Linking with CMake
+
+Add the repository as a subdirectory and link against the `esjs_lexer` target:
+
+```cmake
+add_subdirectory(esjs-custom-lexer)
+target_link_libraries(my_target PRIVATE esjs_lexer)
+```
+
+The `esjs_lexer` target already sets `target_include_directories(... PUBLIC include)`,
+so no extra `include_directories()` call is needed.
+
+### Linking manually (GCC / Make)
+
+```bash
+# 1. Build the static library
+make -C esjs-custom-lexer lib
+
+# 2. Compile your program
+gcc -std=c11 \
+    -Iesjs-custom-lexer/include \
+    my_program.c \
+    esjs-custom-lexer/libesjs_lexer.a \
+    -o my_program
+```
+
+### API summary
+
+| Function | Description |
+|---|---|
+| `buffer_init(buf, FILE*)` | Open a buffer over any `FILE*` stream |
+| `buffer_destroy(buf)` | Release heap memory (does not close the FILE*) |
+| `lexer_init(lexer, buf)` | Wire the lexer to a buffer; initializes the DFA |
+| `lexer_next_token(lexer, tok)` | Fill `tok` with the next token; returns 1 always |
+| `token_type_to_string(type)` | Map a `TokenType` to its canonical tag string |
+
+The `Token` struct exposes:
+
+| Field | Type | Description |
+|---|---|---|
+| `type` | `TokenType` | Semantic category |
+| `lexeme_start` | `const char *` | Pointer into the buffer's internal array |
+| `lexeme_length` | `size_t` | Byte length of the lexeme |
+| `line` | `int` | 1-based source line |
+| `column` | `int` | 1-based source column (code-point count, not bytes) |
+
+> **Note:** `lexeme_start` is a non-owning view into the `Buffer`'s internal
+> array. Copy the bytes if you need to keep them after calling `buffer_destroy()`.
 
 ---
 

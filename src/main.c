@@ -86,9 +86,8 @@ static int print_token(const Token *token) {
  * @brief Entry point: initializes the pipeline and drives the token loop.
  *
  * Initialization order:
- *  1. dfa_init()    - builds the DFA transition table (must be first).
- *  2. buffer_init() - creates a lazy buffer over stdin.
- *  3. lexer_init()  - wires the lexer to the buffer.
+ *  1. buffer_init() - creates a lazy buffer over stdin.
+ *  2. lexer_init()  - wires the lexer to the buffer (calls dfa_init() internally).
  *
  * Token loop:
  *  Calls lexer_next_token() repeatedly until TOKEN_EOF is encountered or
@@ -102,7 +101,6 @@ int main(void) {
   Lexer  lexer;
   Token  token;
 
-  dfa_init();
   buffer_init(&buffer, stdin);
   lexer_init(&lexer, &buffer);
 

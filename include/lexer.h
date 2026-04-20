@@ -40,6 +40,7 @@ typedef struct {
 /**
  * @brief Initializes the Lexer over an input buffer.
  *
+ * Calls dfa_init() internally (idempotent: safe to call more than once).
  * The Buffer must have been initialized via buffer_init() before this call.
  * The Lexer does not take ownership of @p buffer.
  *
