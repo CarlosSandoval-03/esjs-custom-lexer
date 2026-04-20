@@ -1,7 +1,14 @@
 var NAVTREEINDEX1 =
 {
-"db/d62/scanner_8h.html#ae08b2668234a8a5e194e359263ebd9d6":[2,0,0,5,11],
-"db/d62/scanner_8h_source.html":[2,0,0,5],
+"db/d62/scanner_8h.html#a85c910a20eb93e6903be833dfb284d6e":[2,0,0,6,3],
+"db/d62/scanner_8h.html#a86d60aa17b4d3dd74b5ca0f8d503e010":[2,0,0,6,6],
+"db/d62/scanner_8h.html#a8d9865dc7f53ab8fc97fc5adb797d569":[2,0,0,6,1],
+"db/d62/scanner_8h.html#a8d9865dc7f53ab8fc97fc5adb797d569a5f93e88718a370456c949d267d219342":[2,0,0,6,1,0],
+"db/d62/scanner_8h.html#a8d9865dc7f53ab8fc97fc5adb797d569af005bd8209ab6f066f6556a2e36bfc94":[2,0,0,6,1,1],
+"db/d62/scanner_8h.html#a9b32c82d11e326f8926c6064a10cf77e":[2,0,0,6,4],
+"db/d62/scanner_8h.html#abf9d9a34c36b69df9e91e7b04b665718":[2,0,0,6,8],
+"db/d62/scanner_8h.html#ae08b2668234a8a5e194e359263ebd9d6":[2,0,0,6,11],
+"db/d62/scanner_8h_source.html":[2,0,0,6],
 "dd/d0b/structLexer.html":[1,0,1],
 "dd/d0b/structLexer.html#a4e784e8f5c39726b1b4a08cee4b6f0ba":[1,0,1,0],
 "dd/dce/keywords_8c.html":[2,0,1,3],

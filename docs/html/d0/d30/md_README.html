@@ -92,10 +92,10 @@ $(function(){initNavTree('d0/d30/md_README.html','../../',''); });
   <div class="headertitle"><div class="title">esjs-custom-lexer </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a></p>
 <p>A hand-written lexical analyzer (lexer / tokenizer) for <b>EsJS</b>, a Spanish-syntax dialect of JavaScript. The lexer is implemented in C11 and uses a table-driven Deterministic Finite Automaton (DFA) as its core recognition engine.</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Table of Contents</h1>
 <ul>
 <li>Project Overview</li>
@@ -105,10 +105,11 @@ Table of Contents</h1>
 <li>Design Decisions</li>
 <li>Token Reference</li>
 <li>Building and Running</li>
+<li>Using as a Library</li>
 <li>Output Format</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Project Overview</h1>
 <p>EsJS (<a href="https://es.js.org">https://es.js.org</a>) is a variant of JavaScript that uses Spanish reserved words. This lexer takes EsJS source code on standard input and emits a sequence of tokens to standard output, one per line, in a structured text format.</p>
 <p>The implementation is self-contained: no external libraries are required beyond the C standard library.</p>
@@ -117,7 +118,7 @@ Project Overview</h1>
  <b>Compiler flags:</b> <span class="tt">-Wall -Wextra</span> with full warnings enabled <br  />
  <b>Code style:</b> Google C style (enforced via <span class="tt">.clang-format</span>)</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 Architecture</h1>
 <p>The lexer is organized as a layered pipeline. Each layer has a single responsibility and communicates only with its immediate neighbors.</p>
 <div class="fragment"><div class="line">┌──────────────────────────────────────────────────────────────────┐</div>
@@ -160,7 +161,7 @@ Architecture</h1>
 <div class="line">│   - Retains all loaded bytes for backtracking                    │</div>
 <div class="line">│   - Grows dynamically (doubles on overflow)                      │</div>
 <div class="line">└──────────────────────────────────────────────────────────────────┘</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 Module Descriptions</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -180,10 +181,12 @@ Module Descriptions</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a class="el" href="../../dd/d0b/structLexer.html" title="Lexer state: a thin wrapper around a Scanner.">Lexer</a>  </td><td class="markdownTableBodyNone"><span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html" title="High-level lexer interface that orchestrates scanning, token-type resolution, and comment/whitespace ...">include/lexer.h</a></span>  </td><td class="markdownTableBodyNone"><span class="tt"><a class="el" href="../../d8/d33/lexer_8c.html" title="High-level lexer: whitespace/comment skipping, token-type resolution, and token structure population.">src/lexer.c</a></span>  </td><td class="markdownTableBodyNone">Public API: comment skipping and token dispatch  </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Public API  </td><td class="markdownTableBodyNone"><span class="tt"><a class="el" href="../../da/de4/esjs__lexer_8h.html" title="Single-include public API for embedding the EsJS lexer as a library.">include/esjs_lexer.h</a></span>  </td><td class="markdownTableBodyNone">—  </td><td class="markdownTableBodyNone">Single-include umbrella header for library users  </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Driver  </td><td class="markdownTableBodyNone">—  </td><td class="markdownTableBodyNone"><span class="tt"><a class="el" href="../../d0/d29/main_8c.html" title="Command-line driver for the EsJS lexer.">src/main.c</a></span>  </td><td class="markdownTableBodyNone">CLI entry point and output formatting  </td></tr>
 </table>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 Processing Flow</h1>
 <p>The following diagram shows the sequence of operations performed by a single call to <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625" title="Scans and returns the next token from the input.">lexer_next_token()</a></span>.</p>
 <div class="fragment"><div class="line">sequenceDiagram</div>
@@ -232,9 +235,9 @@ Processing Flow</h1>
 <div class="line">    Lexer-&gt;&gt;Lexer: lexer_fill_token(token, type, ...)</div>
 <div class="line">    Lexer--&gt;&gt;Driver: token</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 DFA Design</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 State Groups</h2>
 <p>The automaton has approximately 70 states divided into functional groups:</p>
 <div class="fragment"><div class="line">stateDiagram-v2</div>
@@ -278,7 +281,7 @@ State Groups</h2>
 <div class="line">    STATE_ID_UNICODE_HEX1 --&gt; STATE_ID_UNICODE_HEX2 : hex digit</div>
 <div class="line">    STATE_ID_UNICODE_HEX2 --&gt; STATE_ID_UNICODE_HEX3 : hex digit</div>
 <div class="line">    STATE_ID_UNICODE_HEX3 --&gt; STATE_ID_UNICODE_HEX4 : hex digit</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Character Classes</h2>
 <p>The DFA alphabet consists of 35 character classes (<span class="tt">_CHAR_ENUM_COUNT</span>). Rather than a 128-entry ASCII table, the automaton uses this compact alphabet so the transition table dimensions remain manageable (70 states x 35 classes).</p>
 <p>The most notable classes:</p>
@@ -294,7 +297,7 @@ Character Classes</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">CHAR_BACKSLASH</span>  </td><td class="markdownTableBodyNone"><span class="tt">\</span>; starts escape sequences in strings and identifiers  </td></tr>
 </table>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Accepting States</h2>
 <p>A state is accepting when the input consumed so far forms a complete, valid token. The scanner records the last accepting position and uses it when the DFA transitions to <span class="tt">STATE_ERROR</span> (maximal munch).</p>
 <p>Notable non-accepting states:</p>
@@ -305,21 +308,21 @@ Accepting States</h2>
 <li><span class="tt">STATE_ID_BACKSLASH</span> through <span class="tt">STATE_ID_UNICODE_HEX3</span>: partial Unicode escape sequences.</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Design Decisions</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 1. Table-driven DFA over hand-coded switch chains</h2>
 <p>A 2-D array indexed by <span class="tt">(LexerState, <a class="el" href="../../d6/d89/charclass_8h.html#aef66138f2fb6451386211d97c1a96622" title="Discrete input-alphabet symbol fed into the DFA transition table.">CharClass</a>)</span> provides O(1) transitions and makes the automaton structure explicit and inspectable. Adding a new token type is a matter of adding new table entries in a dedicated helper function inside <span class="tt"><a class="el" href="../../d0/d68/dfa_8c.html" title="DFA transition table construction and query implementation.">dfa.c</a></span>, with no risk of falling through a switch case or missing an update in a remote code path.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 2. Character classes as the DFA alphabet</h2>
 <p>By introducing the <span class="tt"><a class="el" href="../../d6/d89/charclass_8h.html#aef66138f2fb6451386211d97c1a96622" title="Discrete input-alphabet symbol fed into the DFA transition table.">CharClass</a></span> abstraction, the DFA transitions are indexed by a compact 35-element alphabet instead of 256 raw byte values. This reduces the table size by roughly 7x and makes the rules readable: <span class="tt">dfa_table[s][CHAR_PLUS]</span> is self-documenting in a way that <span class="tt">dfa_table[s][43]</span> is not.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 3. Lazy input buffer with full retention</h2>
 <p>The <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html" title="Lazily-loaded byte buffer backed by a FILE stream.">Buffer</a></span> reads bytes from the stream on demand and never discards them. This allows the scanner to perform unlimited lookahead and trivial backtracking by re-reading lower positions. The cost is O(n) memory proportional to the input size, which is acceptable for source files.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 4. Maximal munch via last-accepting-state tracking</h2>
 <p>The scanner does not commit to a token until the DFA reaches <span class="tt">STATE_ERROR</span>. At that point it rewinds to the furthest accepting position recorded during the run. This correctly handles overlapping token prefixes such as <span class="tt">+</span> vs <span class="tt">++</span> vs <span class="tt">+=</span> without any explicit lookahead logic in the caller.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 5. Regex / division disambiguation by competitive probing</h2>
 <p>The <span class="tt">/</span> character is genuinely ambiguous at the lexical level without syntactic context. The scanner resolves this by running two independent DFA probes on a copy of the cursor:</p>
 <ul>
@@ -327,31 +330,31 @@ Design Decisions</h1>
 <li>Probe B: regex path — manually consumes the <span class="tt">/</span>, then runs from <span class="tt">STATE_REGEX_BODY</span>.</li>
 </ul>
 <p>The longer match wins (maximal munch applied across the two alternatives). If both produce the same length, the division interpretation is preferred. This strategy avoids the need to pass parser-level context into the lexer.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 6. Regex entry via a separate state</h2>
 <p>The regex body sub-automaton starts at <span class="tt">STATE_REGEX_BODY</span> rather than <span class="tt">STATE_START</span>. This keeps the division-operator transitions completely independent from the regex transitions and avoids any conflict. The scanner chooses the entry point; the DFA itself has no knowledge of the ambiguity.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
 7. Standalone <span class="tt">&amp;</span> and <span class="tt">|</span> are lexical errors</h2>
 <p>EsJS does not use bitwise AND/OR operators. Accepting <span class="tt">&amp;</span> as a valid token would silently misclassify a typo or an unsupported operator. Making <span class="tt">STATE_AMPERSAND</span> and <span class="tt">STATE_PIPE</span> non-accepting ensures the error is detected at the lexical phase rather than the parsing phase.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
 8. UTF-8 as a first-class citizen</h2>
 <p>Identifiers may contain arbitrary Unicode letters. UTF-8 leading bytes (&gt;= 0xC0) are classified as <span class="tt">CHAR_LETTER</span> and UTF-8 continuation bytes as <span class="tt">CHAR_UTF8_CONTINUATION</span>. The scanner skips continuation bytes atomically after a leading byte, so a multi-byte code point consumes exactly one DFA transition. Column counting similarly ignores continuation bytes so the column reflects code-point positions.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
 9. X-macro for the keyword list</h2>
 <p>The <span class="tt"><a class="el" href="../../d2/db7/keywords_8h.html#a4180679d1d7a07d6485c185ccdbf31fa" title="X-macro that enumerates every EsJS reserved word.">ESJS_KEYWORDS(X)</a></span> macro in <span class="tt"><a class="el" href="../../d2/db7/keywords_8h.html" title="EsJS reserved-word inventory and keyword lookup interface.">keywords.h</a></span> is the single source of truth for all reserved words. Any file that needs to iterate the keyword list (lookup tables, documentation generation, etc.) expands this macro. Adding a new keyword is a one-line change in one place.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 10. Delimiter stripping in the Lexer, not the Scanner</h2>
 <p>String and regex delimiters (quotes and slashes) are part of the DFA match but are stripped by the <a class="el" href="../../dd/d0b/structLexer.html" title="Lexer state: a thin wrapper around a Scanner.">Lexer</a> before filling the <span class="tt"><a class="el" href="../../df/dcd/structToken.html" title="Lightweight, non-owning view of a single lexeme in the input buffer.">Token</a></span>. This keeps the <a class="el" href="../../de/d86/structScanner.html" title="Cursor state over the input Buffer.">Scanner</a> and DFA simple (they deal only in raw bytes) while giving <a class="el" href="../../df/dcd/structToken.html" title="Lightweight, non-owning view of a single lexeme in the input buffer.">Token</a> consumers content without delimiters.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 11. Unclosed block comment as a lexical error</h2>
 <p>When a block comment is opened but EOF is reached before the closing star-slash, the lexer emits TOKEN_ERROR pointing to the position of the opening slash-star. This makes the error visible at the exact location where the comment was opened rather than at EOF, which is far more useful for diagnostics. The error is produced inside the skip function rather than being deferred to the main scan loop.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 12. Trailing-dot float is not a valid number literal</h2>
 <p>The DFA state <span class="tt">STATE_DOT_NUMBER</span> (reached after consuming <span class="tt">N.</span>) is non-accepting. A number such as <span class="tt">10.</span> is therefore tokenized as the integer <span class="tt">10</span> followed by the period operator <span class="tt">.</span>, not as a float. Only the forms <span class="tt">N.M</span> (e.g. <span class="tt">3.14</span>) and <span class="tt">.M</span> (e.g. <span class="tt">.5</span>) are valid numeric literals. This matches stricter JavaScript parsing rules and avoids ambiguity with member access expressions.</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Token Reference</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
 Literal tokens</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -365,7 +368,7 @@ Literal tokens</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">tkn_reg</span>  </td><td class="markdownTableBodyNone">Regex literal (slashes stripped)  </td><td class="markdownTableBodyNone"><span class="tt">\d+</span>  </td></tr>
 </table>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
 Keyword tokens</h2>
 <p>Reserved words are printed directly as their EsJS text (e.g. <span class="tt">funcion</span>, <span class="tt">si</span>, <span class="tt">mientras</span>) without a generic <span class="tt">keyword</span> tag.</p>
 <p>A non-exhaustive sample:</p>
@@ -393,7 +396,7 @@ Keyword tokens</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="tt">asincrono</span> / <span class="tt">esperar</span>  </td><td class="markdownTableBodyNone"><span class="tt">async</span> / <span class="tt">await</span>  </td></tr>
 </table>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
 Operator and punctuation tokens</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -434,27 +437,132 @@ Operator and punctuation tokens</h2>
 <td class="markdownTableBodyNone"><span class="tt">tkn_colon</span>  </td><td class="markdownTableBodyNone"><span class="tt">:</span>  </td><td class="markdownTableBodyNone"><span class="tt">tkn_period</span>  </td><td class="markdownTableBodyNone"><span class="tt">.</span>  </td></tr>
 </table>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
 Building and Running</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 CMake (recommended)</h2>
 <div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
 <div class="line">cmake ..</div>
-<div class="line">make</div>
+<div class="line">make                          # builds: esjs_custom_lexer (CLI) + esjs_lexer (static lib)</div>
 <div class="line">echo &quot;var x = 42;&quot; | ./esjs_custom_lexer</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 GNU Make</h2>
-<div class="fragment"><div class="line">make build   # Compile</div>
+<div class="fragment"><div class="line">make build   # Compile the CLI executable</div>
+<div class="line">make lib     # Build libesjs_lexer.a (static library only)</div>
 <div class="line">make run     # Compile and run (reads from stdin)</div>
 <div class="line">make clean   # Remove build artifacts</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Dependencies</h2>
 <ul>
 <li>C11-compatible compiler (GCC 5+ or Clang 3.5+)</li>
-<li>CMake 3.10+ or GNU Make</li>
+<li>CMake 4.1+ or GNU Make</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+Using as a Library</h1>
+<p>The lexer can be embedded in any C project. The single-include entry point is <span class="tt"><a class="el" href="../../da/de4/esjs__lexer_8h.html" title="Single-include public API for embedding the EsJS lexer as a library.">include/esjs_lexer.h</a></span>, which re-exports <span class="tt"><a class="el" href="../../d1/d07/token_8h.html" title="Token type definitions and the Token structure used throughout the lexer pipeline.">token.h</a></span>, <span class="tt"><a class="el" href="../../d5/d08/buffer_8h.html" title="Lazily-loaded, dynamically-growing input buffer for the lexer.">buffer.h</a></span>, and <span class="tt"><a class="el" href="../../d5/df3/lexer_8h.html" title="High-level lexer interface that orchestrates scanning, token-type resolution, and comment/whitespace ...">lexer.h</a></span>.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+Quick start</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="../../da/de4/esjs__lexer_8h.html">esjs_lexer.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> <a class="code hl_function" href="../../d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line">  FILE *f = fopen(<span class="stringliteral">&quot;programa.esjs&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="../../d6/d3a/structBuffer.html">Buffer</a> buf;</div>
+<div class="line">  <a class="code hl_function" href="../../d5/d08/buffer_8h.html#af7a5e0172411d740c10f0bbd9848f6fc">buffer_init</a>(&amp;buf, f);</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="../../dd/d0b/structLexer.html">Lexer</a> lexer;</div>
+<div class="line">  <a class="code hl_function" href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a>(&amp;lexer, &amp;buf);   <span class="comment">/* also initializes the DFA internally */</span></div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="../../df/dcd/structToken.html">Token</a> tok;</div>
+<div class="line">  <span class="keywordflow">while</span> (<a class="code hl_function" href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a>(&amp;lexer, &amp;tok)) {</div>
+<div class="line">    <span class="keywordflow">if</span> (tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">type</a> == <a class="code hl_enumvalue" href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc">TOKEN_EOF</a>)</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">if</span> (tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">type</a> == <a class="code hl_enumvalue" href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921abbfc577192f2423b39a5f693e260b615">TOKEN_ERROR</a>) {</div>
+<div class="line">      fprintf(stderr, <span class="stringliteral">&quot;error at line %d, col %d\n&quot;</span>, tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd">line</a>, tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a1f1d8ce91307dd46c151bc7e1b73685a">column</a>);</div>
+<div class="line">      <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">    printf(<span class="stringliteral">&quot;%s  \&quot;%.*s\&quot;  line %d  col %d\n&quot;</span>,</div>
+<div class="line">           <a class="code hl_function" href="../../d1/d07/token_8h.html#af658bbc88d277ff1a3b93f99a11d26f3">token_type_to_string</a>(tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">type</a>),</div>
+<div class="line">           (<span class="keywordtype">int</span>)tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309">lexeme_length</a>, tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d">lexeme_start</a>,</div>
+<div class="line">           tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd">line</a>, tok.<a class="code hl_variable" href="../../df/dcd/structToken.html#a1f1d8ce91307dd46c151bc7e1b73685a">column</a>);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_function" href="../../d5/d08/buffer_8h.html#a8b8df2617d05b9510ececf279308cb8c">buffer_destroy</a>(&amp;buf);</div>
+<div class="line">  fclose(f);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="abuffer_8h_html_a8b8df2617d05b9510ececf279308cb8c"><div class="ttname"><a href="../../d5/d08/buffer_8h.html#a8b8df2617d05b9510ececf279308cb8c">buffer_destroy</a></div><div class="ttdeci">void buffer_destroy(Buffer *buf)</div><div class="ttdoc">Releases all heap memory and resets the Buffer to an inert state.</div><div class="ttdef"><b>Definition</b> buffer.c:100</div></div>
+<div class="ttc" id="abuffer_8h_html_af7a5e0172411d740c10f0bbd9848f6fc"><div class="ttname"><a href="../../d5/d08/buffer_8h.html#af7a5e0172411d740c10f0bbd9848f6fc">buffer_init</a></div><div class="ttdeci">void buffer_init(Buffer *buf, FILE *input)</div><div class="ttdoc">Initializes a Buffer to an empty state backed by input.</div><div class="ttdef"><b>Definition</b> buffer.c:83</div></div>
+<div class="ttc" id="aesjs__lexer_8h_html"><div class="ttname"><a href="../../da/de4/esjs__lexer_8h.html">esjs_lexer.h</a></div><div class="ttdoc">Single-include public API for embedding the EsJS lexer as a library.</div></div>
+<div class="ttc" id="alexer_8h_html_a117257e9d382f77c82f9a53be3e12590"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#a117257e9d382f77c82f9a53be3e12590">lexer_init</a></div><div class="ttdeci">void lexer_init(Lexer *lexer, Buffer *buffer)</div><div class="ttdoc">Initializes the Lexer over an input buffer.</div><div class="ttdef"><b>Definition</b> lexer.c:274</div></div>
+<div class="ttc" id="alexer_8h_html_ac626a44fe31c24fd5bf3fc084fd5b625"><div class="ttname"><a href="../../d5/df3/lexer_8h.html#ac626a44fe31c24fd5bf3fc084fd5b625">lexer_next_token</a></div><div class="ttdeci">int lexer_next_token(Lexer *lexer, Token *token)</div><div class="ttdoc">Scans and returns the next token from the input.</div><div class="ttdef"><b>Definition</b> lexer.c:304</div></div>
+<div class="ttc" id="amain_8c_html_a840291bc02cba5474a4cb46a9b9566fe"><div class="ttname"><a href="../../d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a></div><div class="ttdeci">int main(void)</div><div class="ttdoc">Entry point: initializes the pipeline and drives the token loop.</div><div class="ttdef"><b>Definition</b> main.c:99</div></div>
+<div class="ttc" id="astructBuffer_html"><div class="ttname"><a href="../../d6/d3a/structBuffer.html">Buffer</a></div><div class="ttdoc">Lazily-loaded byte buffer backed by a FILE stream.</div><div class="ttdef"><b>Definition</b> buffer.h:36</div></div>
+<div class="ttc" id="astructLexer_html"><div class="ttname"><a href="../../dd/d0b/structLexer.html">Lexer</a></div><div class="ttdoc">Lexer state: a thin wrapper around a Scanner.</div><div class="ttdef"><b>Definition</b> lexer.h:36</div></div>
+<div class="ttc" id="astructToken_html"><div class="ttname"><a href="../../df/dcd/structToken.html">Token</a></div><div class="ttdoc">Lightweight, non-owning view of a single lexeme in the input buffer.</div><div class="ttdef"><b>Definition</b> token.h:191</div></div>
+<div class="ttc" id="astructToken_html_a1f1d8ce91307dd46c151bc7e1b73685a"><div class="ttname"><a href="../../df/dcd/structToken.html#a1f1d8ce91307dd46c151bc7e1b73685a">Token::column</a></div><div class="ttdeci">int column</div><div class="ttdef"><b>Definition</b> token.h:196</div></div>
+<div class="ttc" id="astructToken_html_a225d4ce1b34368d794fdcb9575180309"><div class="ttname"><a href="../../df/dcd/structToken.html#a225d4ce1b34368d794fdcb9575180309">Token::lexeme_length</a></div><div class="ttdeci">size_t lexeme_length</div><div class="ttdef"><b>Definition</b> token.h:194</div></div>
+<div class="ttc" id="astructToken_html_a4b96c2a31d7c374fd2bd1986794f80dd"><div class="ttname"><a href="../../df/dcd/structToken.html#a4b96c2a31d7c374fd2bd1986794f80dd">Token::line</a></div><div class="ttdeci">int line</div><div class="ttdef"><b>Definition</b> token.h:195</div></div>
+<div class="ttc" id="astructToken_html_a67919af9f3a80dc0b28a0ab1e6d5bf8a"><div class="ttname"><a href="../../df/dcd/structToken.html#a67919af9f3a80dc0b28a0ab1e6d5bf8a">Token::type</a></div><div class="ttdeci">TokenType type</div><div class="ttdef"><b>Definition</b> token.h:192</div></div>
+<div class="ttc" id="astructToken_html_aeac07c6280610fa128b113ba7eed560d"><div class="ttname"><a href="../../df/dcd/structToken.html#aeac07c6280610fa128b113ba7eed560d">Token::lexeme_start</a></div><div class="ttdeci">const char * lexeme_start</div><div class="ttdef"><b>Definition</b> token.h:193</div></div>
+<div class="ttc" id="atoken_8h_html_aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc"><div class="ttname"><a href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921aa130df27256cd45f5781fc74deeb50dc">TOKEN_EOF</a></div><div class="ttdeci">@ TOKEN_EOF</div><div class="ttdef"><b>Definition</b> token.h:106</div></div>
+<div class="ttc" id="atoken_8h_html_aa520fbf142ba1e7e659590c07da31921abbfc577192f2423b39a5f693e260b615"><div class="ttname"><a href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921abbfc577192f2423b39a5f693e260b615">TOKEN_ERROR</a></div><div class="ttdeci">@ TOKEN_ERROR</div><div class="ttdef"><b>Definition</b> token.h:107</div></div>
+<div class="ttc" id="atoken_8h_html_af658bbc88d277ff1a3b93f99a11d26f3"><div class="ttname"><a href="../../d1/d07/token_8h.html#af658bbc88d277ff1a3b93f99a11d26f3">token_type_to_string</a></div><div class="ttdeci">const char * token_type_to_string(TokenType type)</div><div class="ttdoc">Maps a TokenType to its canonical string name used in output.</div><div class="ttdef"><b>Definition</b> token.c:118</div></div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+Linking with CMake</h2>
+<p>Add the repository as a subdirectory and link against the <span class="tt">esjs_lexer</span> target:</p>
+<div class="fragment"><div class="line">add_subdirectory(esjs-custom-lexer)</div>
+<div class="line">target_link_libraries(my_target PRIVATE esjs_lexer)</div>
+</div><!-- fragment --><p>The <span class="tt">esjs_lexer</span> target already sets <span class="tt">target_include_directories(... PUBLIC include)</span>, so no extra <span class="tt">include_directories()</span> call is needed.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+Linking manually (GCC / Make)</h2>
+<div class="fragment"><div class="line"># 1. Build the static library</div>
+<div class="line">make -C esjs-custom-lexer lib</div>
+<div class="line"> </div>
+<div class="line"># 2. Compile your program</div>
+<div class="line">gcc -std=c11 \</div>
+<div class="line">    -Iesjs-custom-lexer/include \</div>
+<div class="line">    my_program.c \</div>
+<div class="line">    esjs-custom-lexer/libesjs_lexer.a \</div>
+<div class="line">    -o my_program</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+API summary</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Function  </th><th class="markdownTableHeadNone">Description  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">buffer_init(buf, FILE*)</span>  </td><td class="markdownTableBodyNone">Open a buffer over any <span class="tt">FILE*</span> stream  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">buffer_destroy(buf)</span>  </td><td class="markdownTableBodyNone">Release heap memory (does not close the FILE*)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">lexer_init(lexer, buf)</span>  </td><td class="markdownTableBodyNone">Wire the lexer to a buffer; initializes the DFA  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">lexer_next_token(lexer, tok)</span>  </td><td class="markdownTableBodyNone">Fill <span class="tt">tok</span> with the next token; returns 1 always  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">token_type_to_string(type)</span>  </td><td class="markdownTableBodyNone">Map a <span class="tt"><a class="el" href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921" title="Exhaustive list of token categories recognized by the EsJS lexer.">TokenType</a></span> to its canonical tag string  </td></tr>
+</table>
+<p>The <span class="tt"><a class="el" href="../../df/dcd/structToken.html" title="Lightweight, non-owning view of a single lexeme in the input buffer.">Token</a></span> struct exposes:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Field  </th><th class="markdownTableHeadNone">Type  </th><th class="markdownTableHeadNone">Description  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">type</span>  </td><td class="markdownTableBodyNone"><span class="tt"><a class="el" href="../../d1/d07/token_8h.html#aa520fbf142ba1e7e659590c07da31921" title="Exhaustive list of token categories recognized by the EsJS lexer.">TokenType</a></span>  </td><td class="markdownTableBodyNone">Semantic category  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">lexeme_start</span>  </td><td class="markdownTableBodyNone"><span class="tt">const char *</span>  </td><td class="markdownTableBodyNone">Pointer into the buffer's internal array  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">lexeme_length</span>  </td><td class="markdownTableBodyNone"><span class="tt">size_t</span>  </td><td class="markdownTableBodyNone">Byte length of the lexeme  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">line</span>  </td><td class="markdownTableBodyNone"><span class="tt">int</span>  </td><td class="markdownTableBodyNone">1-based source line  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">column</span>  </td><td class="markdownTableBodyNone"><span class="tt">int</span>  </td><td class="markdownTableBodyNone">1-based source column (code-point count, not bytes)  </td></tr>
+</table>
+<blockquote class="doxtable">
+<p><b>Note:</b> <span class="tt">lexeme_start</span> is a non-owning view into the <span class="tt"><a class="el" href="../../d6/d3a/structBuffer.html" title="Lazily-loaded byte buffer backed by a FILE stream.">Buffer</a></span>'s internal array. Copy the bytes if you need to keep them after calling <span class="tt"><a class="el" href="../../d5/d08/buffer_8h.html#a8b8df2617d05b9510ececf279308cb8c" title="Releases all heap memory and resets the Buffer to an inert state.">buffer_destroy()</a></span>. </p>
+</blockquote>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
 Output Format</h1>
 <div class="fragment"><div class="line">&lt;funcion,1,1&gt;</div>
 <div class="line">&lt;id,calcular,1,9&gt;</div>
@@ -471,7 +579,7 @@ Output Format</h1>
 </div><!-- fragment --><p>On a lexical error, processing stops and the following line is printed:</p>
 <div class="fragment"><div class="line">&gt;&gt;&gt; Error lexico (linea: L, posicion: C)</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
 License</h1>
 <p>MIT License. Copyright 2026 Carlos Sandoval. </p>
 </div></div><!-- contents -->

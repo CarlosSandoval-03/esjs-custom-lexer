@@ -26,43 +26,49 @@ var NAVTREE =
 [
   [ "esjs-custom-lexer", "index.html", [
     [ "esjs-custom-lexer", "d0/d30/md_README.html", [
-      [ "Table of Contents", "d0/d30/md_README.html#autotoc_md2", null ],
-      [ "Project Overview", "d0/d30/md_README.html#autotoc_md4", null ],
-      [ "Architecture", "d0/d30/md_README.html#autotoc_md6", [
-        [ "Module Descriptions", "d0/d30/md_README.html#autotoc_md7", null ]
+      [ "Table of Contents", "d0/d30/md_README.html#autotoc_md4", null ],
+      [ "Project Overview", "d0/d30/md_README.html#autotoc_md6", null ],
+      [ "Architecture", "d0/d30/md_README.html#autotoc_md8", [
+        [ "Module Descriptions", "d0/d30/md_README.html#autotoc_md9", null ]
       ] ],
-      [ "Processing Flow", "d0/d30/md_README.html#autotoc_md9", null ],
-      [ "DFA Design", "d0/d30/md_README.html#autotoc_md11", [
-        [ "State Groups", "d0/d30/md_README.html#autotoc_md12", null ],
-        [ "Character Classes", "d0/d30/md_README.html#autotoc_md13", null ],
-        [ "Accepting States", "d0/d30/md_README.html#autotoc_md14", null ]
+      [ "Processing Flow", "d0/d30/md_README.html#autotoc_md11", null ],
+      [ "DFA Design", "d0/d30/md_README.html#autotoc_md13", [
+        [ "State Groups", "d0/d30/md_README.html#autotoc_md14", null ],
+        [ "Character Classes", "d0/d30/md_README.html#autotoc_md15", null ],
+        [ "Accepting States", "d0/d30/md_README.html#autotoc_md16", null ]
       ] ],
-      [ "Design Decisions", "d0/d30/md_README.html#autotoc_md16", [
-        [ "1. Table-driven DFA over hand-coded switch chains", "d0/d30/md_README.html#autotoc_md17", null ],
-        [ "2. Character classes as the DFA alphabet", "d0/d30/md_README.html#autotoc_md18", null ],
-        [ "3. Lazy input buffer with full retention", "d0/d30/md_README.html#autotoc_md19", null ],
-        [ "4. Maximal munch via last-accepting-state tracking", "d0/d30/md_README.html#autotoc_md20", null ],
-        [ "5. Regex / division disambiguation by competitive probing", "d0/d30/md_README.html#autotoc_md21", null ],
-        [ "6. Regex entry via a separate state", "d0/d30/md_README.html#autotoc_md22", null ],
-        [ "7. Standalone <span class=\"tt\">&amp;</span> and <span class=\"tt\">|</span> are lexical errors", "d0/d30/md_README.html#autotoc_md23", null ],
-        [ "8. UTF-8 as a first-class citizen", "d0/d30/md_README.html#autotoc_md24", null ],
-        [ "9. X-macro for the keyword list", "d0/d30/md_README.html#autotoc_md25", null ],
-        [ "10. Delimiter stripping in the Lexer, not the Scanner", "d0/d30/md_README.html#autotoc_md26", null ],
-        [ "11. Unclosed block comment as a lexical error", "d0/d30/md_README.html#autotoc_md27", null ],
-        [ "12. Trailing-dot float is not a valid number literal", "d0/d30/md_README.html#autotoc_md28", null ]
+      [ "Design Decisions", "d0/d30/md_README.html#autotoc_md18", [
+        [ "1. Table-driven DFA over hand-coded switch chains", "d0/d30/md_README.html#autotoc_md19", null ],
+        [ "2. Character classes as the DFA alphabet", "d0/d30/md_README.html#autotoc_md20", null ],
+        [ "3. Lazy input buffer with full retention", "d0/d30/md_README.html#autotoc_md21", null ],
+        [ "4. Maximal munch via last-accepting-state tracking", "d0/d30/md_README.html#autotoc_md22", null ],
+        [ "5. Regex / division disambiguation by competitive probing", "d0/d30/md_README.html#autotoc_md23", null ],
+        [ "6. Regex entry via a separate state", "d0/d30/md_README.html#autotoc_md24", null ],
+        [ "7. Standalone <span class=\"tt\">&amp;</span> and <span class=\"tt\">|</span> are lexical errors", "d0/d30/md_README.html#autotoc_md25", null ],
+        [ "8. UTF-8 as a first-class citizen", "d0/d30/md_README.html#autotoc_md26", null ],
+        [ "9. X-macro for the keyword list", "d0/d30/md_README.html#autotoc_md27", null ],
+        [ "10. Delimiter stripping in the Lexer, not the Scanner", "d0/d30/md_README.html#autotoc_md28", null ],
+        [ "11. Unclosed block comment as a lexical error", "d0/d30/md_README.html#autotoc_md29", null ],
+        [ "12. Trailing-dot float is not a valid number literal", "d0/d30/md_README.html#autotoc_md30", null ]
       ] ],
-      [ "Token Reference", "d0/d30/md_README.html#autotoc_md30", [
-        [ "Literal tokens", "d0/d30/md_README.html#autotoc_md31", null ],
-        [ "Keyword tokens", "d0/d30/md_README.html#autotoc_md32", null ],
-        [ "Operator and punctuation tokens", "d0/d30/md_README.html#autotoc_md33", null ]
+      [ "Token Reference", "d0/d30/md_README.html#autotoc_md32", [
+        [ "Literal tokens", "d0/d30/md_README.html#autotoc_md33", null ],
+        [ "Keyword tokens", "d0/d30/md_README.html#autotoc_md34", null ],
+        [ "Operator and punctuation tokens", "d0/d30/md_README.html#autotoc_md35", null ]
       ] ],
-      [ "Building and Running", "d0/d30/md_README.html#autotoc_md35", [
-        [ "CMake (recommended)", "d0/d30/md_README.html#autotoc_md36", null ],
-        [ "GNU Make", "d0/d30/md_README.html#autotoc_md37", null ],
-        [ "Dependencies", "d0/d30/md_README.html#autotoc_md38", null ]
+      [ "Building and Running", "d0/d30/md_README.html#autotoc_md37", [
+        [ "CMake (recommended)", "d0/d30/md_README.html#autotoc_md38", null ],
+        [ "GNU Make", "d0/d30/md_README.html#autotoc_md39", null ],
+        [ "Dependencies", "d0/d30/md_README.html#autotoc_md40", null ]
       ] ],
-      [ "Output Format", "d0/d30/md_README.html#autotoc_md40", null ],
-      [ "License", "d0/d30/md_README.html#autotoc_md42", null ]
+      [ "Using as a Library", "d0/d30/md_README.html#autotoc_md42", [
+        [ "Quick start", "d0/d30/md_README.html#autotoc_md43", null ],
+        [ "Linking with CMake", "d0/d30/md_README.html#autotoc_md44", null ],
+        [ "Linking manually (GCC / Make)", "d0/d30/md_README.html#autotoc_md45", null ],
+        [ "API summary", "d0/d30/md_README.html#autotoc_md46", null ]
+      ] ],
+      [ "Output Format", "d0/d30/md_README.html#autotoc_md48", null ],
+      [ "License", "d0/d30/md_README.html#autotoc_md50", null ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -88,7 +94,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"db/d62/scanner_8h.html#ae08b2668234a8a5e194e359263ebd9d6"
+"db/d62/scanner_8h.html#a85c910a20eb93e6903be833dfb284d6e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';
