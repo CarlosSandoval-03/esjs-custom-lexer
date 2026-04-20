@@ -19,6 +19,13 @@
  *  - Produce a TOKEN_ERROR token and advance one byte on unrecognized input.
  *  - Produce a TOKEN_EOF token and return non-zero when end-of-stream is
  *    reached (the caller should stop iterating after seeing TOKEN_EOF).
+ *
+ * @par Thread safety
+ * A Lexer instance (and its underlying Buffer) must not be shared between
+ * threads. Each thread must create its own Buffer and Lexer. The shared DFA
+ * tables are read-only after the first lexer_init() call completes; to avoid
+ * the initialization race, call lexer_init() once on the main thread before
+ * spawning workers (see dfa_init() for details).
  */
 #ifndef ESJS_CUSTOM_LEXER_LEXER_H
 #define ESJS_CUSTOM_LEXER_LEXER_H

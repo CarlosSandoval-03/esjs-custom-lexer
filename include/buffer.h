@@ -30,8 +30,12 @@
  * seek backward (by re-reading lower positions) without re-opening the
  * stream. This enables unlimited lookahead and trivial backtracking.
  *
- * @note The buffer is not thread-safe. External synchronization is required
- *       if multiple threads access the same Buffer concurrently.
+ * @warning **Not thread-safe.** A Buffer must not be shared between threads.
+ *          Concurrent calls to buffer_get() on the same instance race on
+ *          `length`, `capacity`, and `data`: a realloc() triggered by one
+ *          thread moves the heap block, leaving any pointer cached by another
+ *          thread (including Token::lexeme_start values) dangling. Each thread
+ *          must own its own Buffer backed by its own FILE* stream.
  */
 typedef struct {
   FILE   *input;    /**< Source stream. Read sequentially by buffer_fill_to(). */

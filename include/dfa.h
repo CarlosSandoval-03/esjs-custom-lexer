@@ -126,14 +126,22 @@ typedef enum {
  * @brief Constructs and populates the DFA transition table and accepting-state
  *        metadata.
  *
- * Must be called once before any lexer operation. The function:
+ * Must be called once before any lexer operation. In practice this happens
+ * automatically inside lexer_init(). The function:
  *  1. Fills the entire table with STATE_ERROR as the default.
  *  2. Marks accepting states.
  *  3. Installs transition rules for each token category (layout, identifiers,
  *     Unicode escapes, numbers, strings, regex, operators).
  *
- * @note Not thread-safe during initialization. Call from a single thread
- *       before any concurrent scanner activity.
+ * The function is idempotent: subsequent calls after the first are no-ops.
+ *
+ * @warning **Not thread-safe during initialization.** There is a TOCTOU race:
+ *          two threads calling dfa_init() (or lexer_init()) simultaneously for
+ *          the first time can both pass the `dfa_initialized` guard and write
+ *          the tables concurrently, producing a partially corrupt automaton.
+ *          Call dfa_init() (or one lexer_init()) from the main thread before
+ *          spawning any worker threads. After initialization completes the
+ *          tables are read-only and safe for concurrent access.
  */
 void dfa_init(void);
 

@@ -17,6 +17,7 @@ recognition engine.
 - [Token Reference](#token-reference)
 - [Building and Running](#building-and-running)
 - [Using as a Library](#using-as-a-library)
+- [Thread Safety](#thread-safety)
 - [Output Format](#output-format)
 
 ---
@@ -512,6 +513,97 @@ The `Token` struct exposes:
 
 > **Note:** `lexeme_start` is a non-owning view into the `Buffer`'s internal
 > array. Copy the bytes if you need to keep them after calling `buffer_destroy()`.
+
+---
+
+## Thread Safety
+
+**This library is not thread-safe.**
+
+### What is safe
+
+| Component | After first `lexer_init()` completes |
+|---|---|
+| `dfa_table` / `dfa_accepting_state` | Read-only; concurrent reads from any number of threads are safe |
+| Independent `Buffer` + `Lexer` per thread | Fully safe; no shared mutable state |
+
+### What is not safe
+
+#### 1. DFA initialization race (`dfa_init`)
+
+`dfa_init()` uses a plain `static int` flag to avoid re-running. Two threads
+calling `lexer_init()` (which calls `dfa_init()` internally) simultaneously
+for the first time can both pass the guard before either sets it, and write
+the transition tables concurrently. The result is a partially corrupt
+automaton that produces wrong tokens silently.
+
+```
+Thread A: reads dfa_initialized == 0 → enters init body
+Thread B: reads dfa_initialized == 0 → enters init body  ← race
+Both write dfa_table[] at the same time → undefined behavior
+```
+
+**Fix:** call `dfa_init()` (or one `lexer_init()`) from the main thread
+before spawning any worker threads. After it returns the tables are
+read-only for the rest of the program's lifetime.
+
+#### 2. `Buffer` shared between threads
+
+`buffer_get()` may trigger `buffer_fill_to()`, which reads from the `FILE*`
+stream, grows the internal array with `realloc()`, and updates `length`,
+`capacity`, and `data` without any synchronization. Sharing a `Buffer`
+between two threads causes:
+
+- **Data races** on `length` and `capacity` (two threads overwrite the same
+  byte slot).
+- **Use-after-free** when `realloc()` moves the heap block: Thread B holds a
+  stale `data` pointer while Thread A already freed the old block.
+
+Each thread must own its own `Buffer` backed by its own `FILE*`.
+
+#### 3. `Token::lexeme_start` invalidated by reallocation
+
+`lexeme_start` is a raw pointer into `Buffer::data`. Any call to
+`lexer_next_token()` that causes the buffer to grow may move `data` to a new
+address, leaving previously stored `lexeme_start` values as dangling pointers.
+This is a risk even in single-threaded code when tokens are accumulated:
+
+```c
+Token tokens[N];
+for (int i = 0; i < N; i++) {
+    lexer_next_token(&lexer, &tokens[i]);
+    // buffer may realloc here → tokens[0..i-1].lexeme_start can become dangling
+}
+```
+
+Copy the lexeme bytes before calling `lexer_next_token()` again if you need
+to retain the text:
+
+```c
+char copy[256];
+snprintf(copy, sizeof(copy), "%.*s",
+         (int)tok.lexeme_length, tok.lexeme_start);
+```
+
+### Safe multi-threading pattern
+
+```c
+// ── Main thread ──────────────────────────────────────────────────────────────
+dfa_init();  // initialize once; tables become permanently read-only
+
+// ── Each worker thread (fully independent) ───────────────────────────────────
+FILE  *f = fopen("file.esjs", "r");
+Buffer buf;  buffer_init(&buf, f);
+Lexer  lex;  lexer_init(&lex, &buf);  // dfa_init() is a no-op here
+
+Token tok;
+while (lexer_next_token(&lex, &tok) && tok.type != TOKEN_EOF) {
+    /* process tok — copy lexeme_start if it must outlive this iteration */
+}
+
+buffer_destroy(&buf);
+fclose(f);
+```
 
 ---
 
