@@ -31,6 +31,7 @@
  *  - Punctuation and grouping tokens.
  *  - Compound operators: increment, decrement, arrow, ternary, nullish.
  *  - Console built-in object and its recognised method names.
+ *  - Built-in object names recognised as primary expressions.
  *
  * @warning Each value requires its own representation entry in token.c.
  *          Adding a new token type without updating TOKEN_TYPE_NAMES will
@@ -179,6 +180,16 @@ typedef enum {
   TOKEN_CM_INFO,       /**< `info`     - console.info method.               */
   TOKEN_CM_LIMPIAR,    /**< `limpiar`  - console.clear method.              */
   TOKEN_CM_TABLA,      /**< `tabla`    - console.table method.              */
+
+  /* ---- Built-in object names recognised as primary expressions ---------- */
+  TOKEN_ARREGLO,   /**< `Arreglo`  - array built-in object.                 */
+  TOKEN_BOOLEANO,  /**< `Booleano` - boolean built-in object.               */
+  TOKEN_CADENA,    /**< `Cadena`   - string built-in object.                */
+  TOKEN_INFINITO,  /**< `Infinito` - Infinity constant.                     */
+  TOKEN_MATE,      /**< `Mate`     - math built-in object.                  */
+  TOKEN_MATRIZ,    /**< `Matriz`   - matrix/array built-in object.          */
+  TOKEN_NAN,       /**< `NuN`      - Not-a-Number constant.                 */
+  TOKEN_NUMERO,    /**< `Numero`   - number built-in object.                */
 
   /**
    * @internal Sentinel used to track the total number of enum values.
