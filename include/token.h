@@ -30,6 +30,7 @@
  *  - Logical and bitwise operators.
  *  - Punctuation and grouping tokens.
  *  - Compound operators: increment, decrement, arrow, ternary, nullish.
+ *  - Console built-in object and its recognised method names.
  *
  * @warning Each value requires its own representation entry in token.c.
  *          Adding a new token type without updating TOKEN_TYPE_NAMES will
@@ -168,6 +169,16 @@ typedef enum {
   TOKEN_ARROW,    /**< `=>`  - arrow function fat-arrow.                    */
   TOKEN_TERNARY,  /**< `?`   - ternary conditional operator.                */
   TOKEN_NULISH,   /**< `??`  - nullish coalescing operator.                 */
+
+  /* ---- Console built-in and its recognised method names ----------------- */
+  TOKEN_CONSOLE,       /**< `consola`  - console built-in object.           */
+  TOKEN_CM_AFIRMAR,    /**< `afirmar`  - console.assert method.             */
+  TOKEN_CM_AGRUPAR,    /**< `agrupar`  - console.group method.              */
+  TOKEN_CM_ERROR,      /**< `error`    - console.error method.              */
+  TOKEN_CM_ESCRIBIR,   /**< `escribir` - console.log method.                */
+  TOKEN_CM_INFO,       /**< `info`     - console.info method.               */
+  TOKEN_CM_LIMPIAR,    /**< `limpiar`  - console.clear method.              */
+  TOKEN_CM_TABLA,      /**< `tabla`    - console.table method.              */
 
   /**
    * @internal Sentinel used to track the total number of enum values.
